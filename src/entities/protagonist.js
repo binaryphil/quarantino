@@ -8,10 +8,12 @@ class Protagonist {
         actor.use();
     }
     fight(actor) {
-        actor.fight();
+        let fightPower = this.fightPower
+        actor.fight(fightPower);
     }
     talk(actor) {
-        actor.talk();
+        const name = this.name
+        actor.talk(name);
     }
 }
 

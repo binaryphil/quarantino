@@ -1,4 +1,3 @@
-
 class Actors {
     constructor(name, health) {
         this.name = name;
@@ -7,11 +6,11 @@ class Actors {
     use() {
         return console.log(`${this.name} has been used...`);
     }
-    talk() {
-        return console.log(`What do you want to know ${protagonist.name}?`);
+    talk(name) {
+        return console.log(`What do you want to know ${name}?`);
     }
-    fight() {
-        this.health -= protagonist.fightPower;
+    fight(fightPower) {
+        this.health -= fightPower;
         if (this.health <= 0) {
             return console.log(`${this.name} has been destroyed`)
         } else {
