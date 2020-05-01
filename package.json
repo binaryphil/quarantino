@@ -1,0 +1,20 @@
+{
+  "name": "quarantino",
+  "version": "1.0.0",
+  "description": "A survival text game in times of quarantine",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binaryphil/quarantino.git"
+  },
+  "author": "ingecraft, binaryphil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/binaryphil/quarantino/issues"
+  },
+  "homepage": "https://github.com/binaryphil/quarantino#readme"
+}
