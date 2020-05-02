@@ -1,54 +1,142 @@
 class Actor {
-    constructor(name, health) {
+    constructor(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy, fightPower) {
         this.name = name;
         this.health = health;
+        this.desc = desc;
+        this.useResponse = useResponse;
+        this.talkResponse = talkResponse;
+        this.fightResponse = fightResponse;
+        this.fightDestroy = fightDestroy;
+        this.fightPower = fightPower;
         this.type;
-        this.desc;
-        this.useResponse;
-        this.talkResponse;
+        this.fightCount = 1;
+        this.the = "the ";
+        
     }
     look() {
-        return console.log(`You see ${this.desc}.`);
+        if (this.type == "person") this.the = "";
+        console.log(`[Look at ${this.the}${this.name}]`);
+        console.log(`You see ${this.desc}.`);
     }
     use() {
-        return console.log(`${this.useResponse}.`);
+        if (this.type == "person") this.the = "";
+        console.log(`[Use ${this.the}${this.name}]`);
+        console.log(`${this.useResponse}.`);
     }
     talk() {
-        return console.log(`${this.talkResponse}.`);
+        if (this.type == "person") this.the = "";
+        console.log(`[Talk to ${this.the}${this.name}]`);
+        console.log(`${this.talkResponse}.`);
     }
-    fight(fightPower) {
+    fight(fightPower, protagonist) {
+        if (this.type == "person") this.the = "";
+        console.log(`[Fight ${this.the}${this.name} (Fight ${this.fightCount})]`);
+        let fightAgainText1 = "";
+        let fightAgainText2 = "";
+        this.fightCount++;
         this.health -= fightPower;
+        // If Not First Fight Add Text String
+        if (this.fightCount > 2) {
+            fightAgainText1 = " once again";
+            fightAgainText2 = " once more";
+        }
+        // Objects
         if (this.type == "object") {
-            return console.log(`The ${this.name} is an ${this.type} and has ${this.health} health points.`)
-        } else if (this.type == "creature") {
-            return console.log(`The ${this.name} is a ${this.type} and has ${this.health} health points.`)
+            console.log(`You chose to fight the ${this.name}${fightAgainText1}, even though it seems pointless.`);
+            if (this.health <= 0 && this.fightPower <= 0) {
+                // Object Without Fight Power Destroyed
+                console.log(`${this.fightDestroy}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            } 
+            else if (this.health > 0 && this.fightPower > 0) {
+                // Object With Fight Power Not Destroyed
+                protagonist.health -= this.fightPower;
+                console.log(`Your moves are careless${fightAgainText2} and you manage to get injured by the ${this.name}.`);
+                console.log(`${this.fightResponse}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            }
+            else if (this.health <= 0 && this.fightPower > 0) {
+                // Object With Fight Power Destroyed
+                protagonist.health -= this.fightPower;
+                console.log(`Your moves are careless${fightAgainText2} and you manage to get injured by the ${this.name}.`);
+                console.log(`${this.fightDestroy}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            }
+        }
+
+        // Creatures
+        else if (this.type == "creature") {
+            console.log(`You chose to fight the ${this.name}${fightAgainText1}, even though it seems inappropriate.`);
+            if (this.health <= 0 && this.fightPower <= 0) {
+                // Creature Without Fight Power Destroyed
+                console.log(`${this.fightDestroy}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            } else if (this.health > 0 && this.fightPower > 0) {
+                // Creature with Fight Power not Destroyed
+                protagonist.health -= this.fightPower;
+                console.log(`The ${this.name} fights back${fightAgainText2} and injures you.`);
+                console.log(`${this.fightResponse}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            }
+            else if (this.health <= 0 && this.fightPower > 0) {
+                // Creature With Fight Power Destroyed
+                protagonist.health -= this.fightPower;
+                console.log(`The ${this.name} fights back one last time and injures you.`);
+                console.log(`${this.fightDestroy}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            }
+        }
+
+        // Persons
+        else if (this.type == "person") {
+            console.log(`You chose to fight ${this.name}${fightAgainText1}, even though it seems dangerous.`);
+            if (this.health <= 0 && this.fightPower <= 0) {
+                // Person Without Fight Power Destroyed
+                console.log(`${this.fightDestroy}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            } else if (this.health > 0 && this.fightPower > 0) {
+                // Person with Fight Power not Destroyed
+                protagonist.health -= this.fightPower;
+                console.log(`${this.name} fights back${fightAgainText2} and injures you.`);
+                console.log(`${this.fightResponse}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            } else if (this.health <= 0 && this.fightPower > 0) {
+                // Person With Fight Power Destroyed
+                protagonist.health -= this.fightPower;
+                console.log(`${this.name} fights back one last time and injures you.`);
+                console.log(`${this.fightDestroy}.`);
+                console.log(`You now have ${protagonist.health} Health points left.`);
+            }
         }
     }
 }
 
 class Object extends Actor {
-    constructor(name, health, desc, useResponse, talkResponse) {
-        super(name, health, desc, useResponse, talkResponse);
-        this.desc = desc;
-        this.useResponse = useResponse;
-        this.talkResponse = talkResponse;
+    constructor(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy, fightPower) {
+        super(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy, fightPower);
         this.type = "object";
     }
 }
 
 class Creature extends Actor {
-    constructor(name, health, fightPower, desc, useResponse, talkResponse) {
-        super(name, health, fightPower, desc, useResponse, talkResponse);
-        this.desc = desc;
-        this.useResponse = useResponse;
-        this.talkResponse = talkResponse;
-        this.type = "creature";
+    constructor(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy, fightPower) {
+        super(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy);
         this.fightPower = fightPower;
+        this.type = "creature";
+    }
+}
+
+class Person extends Actor {
+    constructor(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy, fightPower) {
+        super(name, health, desc, useResponse, talkResponse, fightResponse, fightDestroy);
+        this.fightPower = fightPower;
+        this.type = "person";
     }
 }
 
 module.exports = {
     Actor: Actor,
     Object: Object,
-    Creature: Creature
+    Creature: Creature,
+    Person: Person
 }

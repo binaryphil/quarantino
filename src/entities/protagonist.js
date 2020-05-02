@@ -12,12 +12,13 @@ class Protagonist {
     }
     fight(actor) {
         let fightPower = this.fightPower
-        actor.fight(fightPower);
+        actor.fight(fightPower, this);
     }
     talk(actor) {
         const name = this.name
         actor.talk(name);
     }
+
 }
 
 module.exports = Protagonist;
