@@ -1,7 +1,7 @@
 const question = require('./interface');
 
 class Game {
-	constructor (room, protagonist, actors) {
+	constructor (day, protagonist, actors) {
 		this.day = day;
 		this.protagonist = protagonist;
 		this.actors = actors;
@@ -32,10 +32,27 @@ class Game {
 	}
 
 	chooseActor() {
-		this.dialogue.question('Choose actor')
+		var index;
+		var question = "Who do you want to interact with?"
+		var answer_text = "So this is your choice!"
+
+		question(question, answer_text).then(answer => {
+			index = answer;
+		});
+
+		return index;
 	}
 
 	chooseAction() {
+		var index;
+		var question = "How will you choose to act?"
+		var answer_text = "So this is your choice!"
+
+		question(question, answer_text).then(answer => {
+			index = answer;
+		});
+
+		return index;
 	}
 
 }
