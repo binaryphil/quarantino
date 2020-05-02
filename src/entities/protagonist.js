@@ -1,23 +1,46 @@
 class Protagonist {
-    constructor(name, physicalHealth, mentalHealth, fightPower) {
+    constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower) {
+        this.alive = true;
         this.name = name;
         this.physicalHealth = physicalHealth;
         this.mentalHealth = mentalHealth;
-        this.fightPower = fightPower;
+        this.physicalPower = physicalPower;
+        this.mentalPower = mentalPower;
     }
     look(actor) {
-        actor.look();
+        if (this.alive) {
+            actor.look();
+        } else {
+            console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
+        }
     }
     use(actor) {
-        actor.use();
+        if (this.alive) {
+            actor.use(this);
+        } else {
+            console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
+        }
     }
     fight(actor) {
-        let fightPower = this.fightPower
-        actor.fight(fightPower, this);
+        if (this.alive) {
+            let physicalPower = this.physicalPower;
+            let mentalPower = this.mentalPower;
+            actor.fight(physicalPower, mentalPower, this);
+        } else {
+            console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
+        }
     }
     talk(actor) {
-        const name = this.name
-        actor.talk(name);
+        if (this.alive) {
+            const name = this.name
+            actor.talk(name);
+        } else {
+            console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
+        }
+    }
+    dead() {
+        this.alive = false;
+        console.log('This is too much... You suffer a mental and psysical breakdown and you die a pointless death.');
     }
 
 }
