@@ -4,6 +4,9 @@ class Protagonist {
         this.health = 100;
         this.fightPower = 5;
     }
+    look(actor) {
+        actor.look();
+    }
     use(actor) {
         actor.use();
     }
