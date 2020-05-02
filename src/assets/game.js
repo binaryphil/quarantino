@@ -6,9 +6,10 @@ class Game {
 	}
 
 	new_turn() {
-		day.next_day()
-		let actors = day.actors;
-
+		this.day.next_day()
+		this.describe_day()
+		this.describe_room()
+	}
 	describe_day() {
 		console.log(day.description());
 	}
@@ -17,6 +18,7 @@ class Game {
 		console.log('This is what you see inside the room:\n')
 		this.actors.forEach(function(actor, index, array) {
 			console.log(actor.description);
-		}
+			console.log("\n");
+		})
 	}
 }
