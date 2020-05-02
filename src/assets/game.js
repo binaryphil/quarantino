@@ -25,3 +25,5 @@ class Game {
 	take_action() {
 	}
 }
+
+module.exports = Game
