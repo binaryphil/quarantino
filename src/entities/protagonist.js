@@ -1,8 +1,8 @@
 class Protagonist {
-    constructor(name) {
+    constructor(name, health, fightPower) {
         this.name = name;
-        this.health = 100;
-        this.fightPower = 5;
+        this.health = health;
+        this.fightPower = fightPower;
     }
     look(actor) {
         actor.look();
