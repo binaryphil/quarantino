@@ -21,4 +21,7 @@ class Game {
 			console.log("\n");
 		})
 	}
+
+	take_action() {
+	}
 }
