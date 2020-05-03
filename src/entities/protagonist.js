@@ -38,11 +38,14 @@ class Protagonist {
             console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
         }
     }
-    dead() {
-        this.alive = false;
-        console.log('This is too much... You suffer a mental and psysical breakdown and you die a pointless death.');
+    isDead() {
+        if (this.physicalHealth <= 0 || this.mentalHealth <= 0) {
+            this.alive = false;
+            console.log('This is too much... You suffer a mental and physical breakdown and you die a pointless death.');
+        } else {
+            console.log(`You now have ${this.physicalHealth} Health points and ${this.mentalHealth} Mental points left.`);
+        }
     }
-
 }
 
-module.exports = Protagonist;
+module.exports = Protagonist

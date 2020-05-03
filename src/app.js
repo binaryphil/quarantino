@@ -26,7 +26,7 @@ const chairFightDestroy = "The uncomfortable chair loses the battle and lays bro
 const catName = "grumpy cat";
 const catPhysicalHealth = 20;
 const catMentalHealth = 15;
-const catPhysicalPower = 20;
+const catPhysicalPower = 10;
 const catMentalPower = 5;
 const catDesc = "a grumpy cat with a judgmental look";
 const catUseResponse = "You caress the grumpy cat and your existance fills with serenity";
@@ -38,10 +38,10 @@ const catFightDestroy = "Powerless against your raging blows and unearthy scream
 const flatmateName = "your flat mate";
 const flatmatePhysicalHealth = 15;
 const flatmateMentallHealth = 15;
-const flatmatePhysicalPower = 20;
-const flatmateMentalPower = 20;
+const flatmatePhysicalPower = 10;
+const flatmateMentalPower = -20;
 const flatmateDesc = "your flat mate sitting idle on the couch";
-const flatmateUseResponse = "You try to fist bump your flatmate but he high fives you instead and then the whole scene becomes weird. At least you tried";
+const flatmateUseResponse = "You try to fist bump your flatmate but he high fives you instead and then the whole scene becomes weird. You feel weird";
 const flatmateTalkResponse = "Your flatmate does not seem to respond. You think maybe because he was born without ears, but you're not sure";
 const flatmateFightResponse = "Your flatmate looks buffled by your aggressive move";
 const flatmateFightDestroy = "Not able to confront your inexplicable furry, your flatmate suffers a stroke and finally succumbs to his injuries";
@@ -90,11 +90,6 @@ const flatmate = new Actors.Person(
     flatmateFightDestroy);
 
 /*-- Actions --*/
-
-// console.log(chair.mentalHealth);
-// console.log(cat.mentalHealth);
-// console.log(flatmate.mentalHealth);
-// console.log(protagonist.mentalHealth);
 
 // Chair
 protagonist.look(chair);
@@ -148,6 +143,9 @@ protagonist.look(flatmate);
 console.log('');
 
 protagonist.talk(flatmate);
+console.log('');
+
+protagonist.use(flatmate);
 console.log('');
 
 protagonist.use(flatmate);
