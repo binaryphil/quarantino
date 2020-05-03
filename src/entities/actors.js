@@ -11,7 +11,7 @@ class Actor {
         this.talkResponse = talkResponse;
         this.fightResponse = fightResponse;
         this.fightDestroy = fightDestroy;
-        this.fightCount = 1;
+        this.fightCount = 0;
         this.the = "the ";
         this.fightAgainText1 = "";
         this.fightAgainText2 = "";
@@ -26,12 +26,12 @@ class Actor {
         console.log(`[Talk to ${this.the}${this.name}]`);
     }
     fight(physicalPower, mentalPower, protagonist) {
-        console.log(`[Fight ${this.the}${this.name} (Fight ${this.fightCount})]`);
         this.fightCount++;
+        console.log(`[Fight ${this.the}${this.name} (Fight ${this.fightCount})]`);
         this.physicalHealth -= Math.abs(physicalPower);
         this.mentalHealth -= Math.abs(mentalPower);
         // If Not First Fight Add Text String
-        if (this.fightCount > 2) {
+        if (this.fightCount > 1) {
             this.fightAgainText1 = " once again";
             this.fightAgainText2 = " once more";
         }
