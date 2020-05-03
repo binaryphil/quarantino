@@ -3,7 +3,9 @@ class ActorGenerator{
 		this.objects = objects;
 		this.creatures = creatures;
 		this.persons = persons;
-		this.how_many = 3;
+
+		// Defines how many actors are returned
+		this.how_many = 1;
 	}
 
 	newActors(){
@@ -17,15 +19,19 @@ class ActorGenerator{
 	}
 
 	randomActor(){
+		// Choose a random type
 		var type = Math.round(Math.random() * 2)
 		switch(type) {
 			case 0:
+				// Choose a random object if type = 0
 				var actor = this.objects[Math.floor(Math.random() * this.objects.length)];
 				return actor;
 			case 1:
+				// Choose a random creature if type = 1
 				var actor = this.creatures[Math.floor(Math.random() * this.creatures.length)];
 				return actor;
 			case 2:
+				// Choose a random person if type = 2
 				var actor = this.persons[Math.floor(Math.random() * this.persons.length)];
 				return actor;
 		}

@@ -8,21 +8,45 @@ class Game {
 		this.actors = actors;
 		this.generator = actor_generator();
 		this.description = "This a game of balance...";
+
+		// How many actions a player has each day
+		this.no_of_actions = 3;
 	}
 
 	gameLoop() {
-		// while (!this.protagonist.isDead() && (this.day.counter < 40) {
+		console.log(this.dscripion);
+		while (!this.protagonist.isDead() && (this.day.counter < 40)) {
+			// check if protagonist is dead
+			if (isPlayerDead()){
+				return;
+			}
+		}
+
 	}
 
 	newTurn() {
-		this.day.nextDay();
+		this.actor = this.genrator.newActors();
+		this.day.nextDay(actor);
 		this.day.describe();
-		this.actors = this.generator.newActors();
 	}
 	
+	endTurn() {
+		
+		if (this.day.counter > 40) {
+			console.log("You son of a bitch, you made it!");
+			return;
+		};
+
+		for (let [index, actor] of this.actors.entries()) {
+			if (actor.isDead()){
+				this.actors.splice(index, 1);
+			};
+		};
+	}
+
 	playerAction() {
-		var actor = this.chooseActor();		
-		var action = this.chooseAction();
+		let actor = this.chooseActor();		
+		let action = this.chooseAction();
 
 		switch(action) {
 			case 1:
@@ -65,6 +89,15 @@ class Game {
 
 		return index;
 	}
+
+	isPlayerDead() {
+		if (this.protagonist.isDead()) {
+			console.log("Game over dude!");
+			return True;
+		};
+		return False;
+	}
+
 }
 
 module.exports = Game
