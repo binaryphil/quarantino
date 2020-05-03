@@ -5,29 +5,12 @@ class Game {
 		this.day = day;
 		this.protagonist = protagonist;
 		this.actors = actors;
-		this.dialogue = readline.createInterface({
-			input: process.stdin,
-			output: process.stdout
-		})
 	}
 
 	newTurn() {
 		this.day.nextDay();
-		this.describeDay();
-		this.describeRoom();
+		this.day.describe();
 		this.playerAction();
-	}
-
-	describeDay() {
-		console.log(day.description());
-	}
-	
-	descibeRoom() {
-		console.log('This is what you see inside the room:\n');
-		
-		this.actors.forEach(function(actor, index, array) {
-			console.log("{index}. {actor.description}\n");
-		});
 	}
 	
 	playerAction() {
