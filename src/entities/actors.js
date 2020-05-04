@@ -1,203 +1,370 @@
 /*-- Import Modules --*/
 class Actor {
-    constructor(name, physicalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy) {
-        this.active = true;
+    constructor(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
         this.name = name;
         this.physicalHealth = physicalHealth;
         this.physicalPower = physicalPower;
         this.mentalPower = mentalPower;
         this.desc = desc;
-        this.useResponse = useResponse;
-        this.talkResponse = talkResponse;
-        this.fightResponse = fightResponse;
-        this.fightDestroy = fightDestroy;
+        this.lookedResponse = lookedResponse;
+        this.usedResponse = usedResponse;
+        this.talkedResponse = talkedResponse;
+        this.foughtResponse = foughtResponse;
+        this.foughtDestroyedResponse = foughtDestroyedResponse;
+        this.lookCount = 0;
+        this.useCount = 0;
+        this.talkCount = 0;
         this.fightCount = 0;
         this.the = "the ";
-        this.fightAgainText1 = "";
-        this.fightAgainText2 = "";
+        this.actionAgainText1 = "";
+        this.actionAgainText2 = "";
+        this.seems = "";
     }
-    look() {
-        console.log(`[Look at ${this.the}${this.name}]`);
+    looked(protagonist) {
+        this.lookCount++;
+        const action = "Look at";
+        this.showAction(action, this.lookCount);
+        (this.lookCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
-    use(protagonist) {
-        console.log(`[Use ${this.the}${this.name}]`);
+    used(protagonist) {
+        this.useCount++;
+        const action = "Use";
+        this.showAction(action, this.useCount);
+        (this.useCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
-    talk() {
-        console.log(`[Talk to ${this.the}${this.name}]`);
+    talked(protagonist) {
+        this.talkCount++;
+        const action = "Talk to";
+        this.showAction(action, this.talkCount);
+        (this.talkCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
-    fight(physicalPower, mentalPower, protagonist) {
+    fought(protagonist) {
         this.fightCount++;
-        console.log(`[Fight ${this.the}${this.name} (Fight ${this.fightCount})]`);
-        this.physicalHealth -= Math.abs(physicalPower);
-        this.mentalHealth -= Math.abs(mentalPower);
-        // If Not First Fight Add Text String
-        if (this.fightCount > 1) {
-            this.fightAgainText1 = " once again";
-            this.fightAgainText2 = " once more";
+        const action = "Fight";
+        this.showAction(action, this.fightCount);
+        (this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+    }
+    showAction(action, count) {
+        console.log(`[${action} ${this.the}${this.name} (${action} ${count})]`);
+    }
+    showText(response) {
+        console.log(response);
+    }
+    loseHealth(protagonist) {
+        this.physicalHealth -= protagonist.physicalPower;
+        this.mentalHealth -= protagonist.mentalPower;
+    }
+    losePhysicalHealth(protagonist) {
+        this.physicalHealth -= protagonist.physicalPower;
+    }
+    loseMentalHealth(protagonist) {
+        this.mentalHealth -= protagonist.mentalPower;
+    }
+    isDead() {
+        if ((this.physicalHealth <= 0 || this.mentalHealth <= 0) 
+        || (this.physicalHealth <= 0 && this.mentalHealth == undefined) 
+        || (this.physicalHealth == undefined && this.mentalHealth <= 0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    showFightIntro(seems) {
+        console.log(`You choose to fight ${this.the}${this.name}${this.actionAgainText1}, even though it seems ${seems}.`);
+    }
+    showAlreadyDead() {
+        console.log(`To your deceit, ${this.the}${this.name} is no more.`);
+    }
+    setActionAgainText() {
+        this.actionAgainText1 = " once again";
+        this.actionAgainText2 = " once more";
+    }
+    resetActionAgainText() {
+        this.actionAgainText1 = "";
+        this.actionAgainText2 = "";
+    }
+}
+
+class PassiveObject extends Actor {
+    looked() {
+        super.looked();
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
+        }
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.usedResponse}.`);
+        }
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.talkedResponse}.`);
+        }
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.seems = "pointless";
+        this.showFightIntro(this.seems);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            // Object is Alive
+            this.loseHealth(protagonist);
+            if (this.isDead()) {
+                // Object Dies
+                this.showText(`${this.foughtDestroyedResponse}.`);
+            } 
         }
     }
 }
 
-class Object extends Actor {
-    constructor(name, physicalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy) {
-        super(name, physicalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy);
+class PositiveObject extends Actor {
+    looked() {
+        super.looked();
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
+        }
     }
-    look() {
-        super.look();
-        console.log(`You see ${this.desc}.`);
+    used(protagonist) {
+        super.used(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.usedResponse}.`);
+            protagonist.gainMentalHealth(this);
+            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+        }
     }
-    use() {
-        super.use();
-        console.log(`${this.useResponse}.`);
+    talked(protagonist) {
+        super.talked(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.talkedResponse}.`);
+        }
     }
-    talk() {
-        super.talk();
-        console.log(`${this.talkResponse}.`);
-    }
-    fight(physicalPower, mentalPower, protagonist) {
-        super.fight(physicalPower, mentalPower, protagonist);
-        console.log(`You chose to fight the ${this.name}${this.fightAgainText1}, even though it seems pointless.`);
-        if (this.active) {
-            // Object is Active
-            if (this.physicalHealth <= 0 && this.physicalPower <= 0 && this.mentalPower <= 0) {
-                // Object With no Physical and Mental Power is Destroyed
-                console.log(`${this.fightDestroy}.`);
-                this.active = false;
-                console.log(`You now have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
-            } else if ((this.physicalHealth > 0 && this.physicalPower > 0) || (this.physicalHealth > 0 && this.mentalPower > 0)) {
-                // Object With Physical or Mental Power Fights Back
-                protagonist.physicalHealth -= Math.abs(this.physicalPower);
-                protagonist.mentalHealth -= Math.abs(this.mentalPower);
-                console.log(`Your moves are careless${this.fightAgainText2} and you manage to get injured by the ${this.name}.`);
-                console.log(`${this.fightResponse}.`);
-                protagonist.isDead();
-            } else if ((this.physicalHealth <= 0 && this.physicalPower > 0) || (this.physicalHealth > 0 && this.mentalPower > 0)) {
-                // Object With Physical or Mental Power Fights Back and is Destroyed
-                protagonist.physicalHealth -= Math.abs(this.physicalPower);
-                protagonist.mentalHealth -= Math.abs(this.mentalPower);
-                console.log(`Your moves are careless${this.fightAgainText2} and you manage to get injured by the ${this.name}.`);
-                console.log(`${this.fightDestroy}.`);
-                this.active = false;
-                protagonist.isDead();
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.seems = "pointless";
+        this.showFightIntro(this.seems);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            // Object is Alive
+            this.loseHealth(protagonist);
+            protagonist.loseHealth(this);
+            if (this.isDead()) {
+                // Object Dies
+                this.showText(`${this.foughtDestroyedResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            } else {
+                // Object Fights Back
+                protagonist.fightObjectResponse(this);
+                this.showText(`${this.foughtResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
             }
-        } else  {
-            // Object is Inactive
-            console.log(`To your deceit, the ${this.name} is no more.`);
-            console.log(`You still have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
         }
     }
 }
 
-class Creature extends Actor {
-    constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy) {
-        super(name, physicalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy);
+class NegativeObject extends Actor {
+    looked() {
+        super.looked();
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
+        }
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.usedResponse}.`);
+            protagonist.loseHealth(this);
+            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+        }
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.talkedResponse}.`);
+        }
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.seems = "pointless";
+        this.showFightIntro(this.seems);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            // Object is Alive
+            this.loseHealth(protagonist);
+            protagonist.loseHealth(this);
+            if (this.isDead()) {
+                // Object Dies
+                this.showText(`${this.foughtDestroyedResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            } else {
+                // Object Fights Back
+                protagonist.fightObjectResponse(this);
+                this.showText(`${this.foughtResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            }
+        }
+    }
+}
+
+class PositiveCreature extends Actor {
+    constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
+        super(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse);
         this.mentalHealth = mentalHealth;
     }
-    look() {
-        super.look();
-        console.log(`You see ${this.desc}.`);
-    }
-    use(protagonist) {
-        super.use(protagonist);
-        protagonist.mentalHealth += this.mentalPower;
-        console.log(`${this.useResponse}.`);
-        console.log(`You now have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
-    }
-    talk() {
-        super.talk();
-        console.log(`${this.talkResponse}.`);
-    }
-    fight(physicalPower, mentalPower, protagonist) {
-        super.fight(physicalPower, mentalPower, protagonist);
-        console.log(`You chose to fight the ${this.name}${this.fightAgainText1}, even though it seems inappropriate.`);
-        if (this.active) {
-            // Creature is Active
-            if ((this.physicalHealth <= 0 && this.physicalPower <= 0 && this.mentalPower <= 0) || (this.mentalHealth <= 0 && this.physicalPower <= 0 && this.mentalPower <= 0)) {
-                // Creature With no Physical and Mental Power is Destroyed
-                console.log(`${this.fightDestroy}.`);
-                this.active = false;
-                console.log(`You now have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
-            } else if (this.physicalHealth > 0 && this.mentalHealth > 0 && this.physicalPower > 0 || this.physicalHealth > 0 && this.mentalHealth > 0 && this.mentalPower > 0) {
-                // Creature With Physical or Mental Power Fights Back
-                protagonist.physicalHealth -= Math.abs(this.physicalPower);
-                protagonist.mentalHealth -= Math.abs(this.mentalPower);
-                console.log(`The ${this.name} fights back${this.fightAgainText2} and injures you.`);
-                console.log(`${this.fightResponse}.`);
-                protagonist.isDead();
-            } else if ((this.physicalHealth <= 0 || this.mentalHealth <= 0 && this.physicalPower > 0) || (this.physicalHealth <= 0 || this.mentalHealth <= 0 && this.mentalPower > 0)) {
-                // Creature With Physical or Mental Power Fights Back and is Destroyed
-                protagonist.physicalHealth -= Math.abs(this.physicalPower);
-                protagonist.mentalHealth -= Math.abs(this.mentalPower);
-                console.log(`The ${this.name} fights back one last time and injures you.`);
-                console.log(`${this.fightDestroy}.`);
-                this.active = false;
-                protagonist.isDead();
-            }
+    looked() {
+        super.looked();
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
         } else {
-            // Creature is Inactive
-            console.log(`To your deceit, the ${this.name} is no more.`);
-            console.log(`You still have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
+            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
+        }
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.usedResponse}.`);
+            protagonist.gainMentalHealth(this);
+            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+        }
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.talkedResponse}.`);
+        }
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.seems = "pointless";
+        this.showFightIntro(this.seems);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            // Object is Alive
+            this.loseHealth(protagonist);
+            protagonist.loseHealth(this);
+            if (this.isDead()) {
+                // Object Dies
+                this.showText(`${this.foughtDestroyedResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            } else {
+                // Object Fights Back
+                protagonist.fightObjectResponse(this);
+                this.showText(`${this.foughtResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            }
         }
     }
 }
 
-class Person extends Actor {
-    constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy) {
-        super(name, physicalHealth, physicalPower, mentalPower, desc, useResponse, talkResponse, fightResponse, fightDestroy);
+class NegativePerson extends Actor {
+    constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
+        super(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse);
         this.mentalHealth = mentalHealth;
         this.the = "";
     }
-    look() {
-        super.look();
-        console.log(`You see ${this.desc}.`);
-    }
-    use(protagonist) {
-        super.use(protagonist);
-        protagonist.mentalHealth += this.mentalPower;
-        console.log(`${this.useResponse}.`);
-        console.log(`You now have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
-    }
-    talk() {
-        super.talk();
-        console.log(`${this.talkResponse}.`);
-    }
-    fight(physicalPower, mentalPower, protagonist) {
-        super.fight(physicalPower, mentalPower, protagonist);
-        console.log(`You chose to fight ${this.name}${this.fightAgainText1}, even though it seems dangerous.`);
-        if (this.active) {
-            // Person is Active
-            if ((this.physicalHealth <= 0 && this.physicalPower <= 0 && this.mentalPower <= 0) || (this.mentalHealth <= 0 && this.physicalPower <= 0 && this.mentalPower <= 0)) {
-                // Person Without Physical or Mental Power is Destroyed
-                console.log(`${this.fightDestroy}.`);
-                this.active = false;
-                console.log(`You now have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
-            } else if ((this.physicalHealth > 0 && this.mentalHealth > 0 && this.physicalPower > 0) || (this.physicalHealth > 0 && this.mentalHealth > 0 && this.mentalPower > 0)) {
-                // Person With Physical or Mental Power Fights Back
-                protagonist.physicalHealth -= Math.abs(this.physicalPower);
-                protagonist.mentalHealth -= Math.abs(this.mentalPower);
-                console.log(`${this.name} fights back${this.fightAgainText2} and injures you.`);
-                console.log(`${this.fightResponse}.`);
-                protagonist.isDead();
-            } else if ((this.physicalHealth <= 0 || this.mentalHealth <= 0 && this.physicalPower > 0) || (this.physicalHealth <= 0 || this.mentalHealth <= 0 && this.mentalPower > 0)) {
-                // Person With Physical or Mental Power Fights Back and is Destroyed
-                protagonist.physicalHealth -= Math.abs(this.physicalPower);
-                protagonist.mentalHealth -= Math.abs(this.mentalPower);
-                console.log(`${this.name} fights back one last time and injures you.`);
-                console.log(`${this.fightDestroy}.`);
-                this.active = false;
-                protagonist.isDead();
-            }
+    looked() {
+        super.looked();
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
         } else {
-            // Person is inactive
-            console.log(`To your deceit, ${this.name} is no more.`);
-            console.log(`You still have ${protagonist.physicalHealth} Health points and ${protagonist.mentalHealth} Mental points left.`);
+            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
+        }
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.usedResponse}.`);
+            protagonist.loseMentalHealth(this);
+            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+        }
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            this.showText(`${this.talkedResponse}.`);
+        }
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.seems = "dangerous";
+        this.showFightIntro(this.seems);
+        if (this.isDead()) {
+            // Object is Already Dead
+            this.showAlreadyDead();
+        } else {
+            // Object is Alive
+            this.loseHealth(protagonist);
+            protagonist.loseHealth(this);
+            if (this.isDead()) {
+                // Object Dies
+                this.showText(`${this.foughtDestroyedResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            } else {
+                // Object Fights Back
+                protagonist.fightObjectResponse(this);
+                this.showText(`${this.foughtResponse}.`);
+                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
+            }
         }
     }
 }
 
 module.exports = {
     Actor: Actor,
-    Object: Object,
-    Creature: Creature,
-    Person: Person
+    PassiveObject: PassiveObject,
+    PositiveObject: PositiveObject,
+    NegativeObject: NegativeObject,
+    PositiveCreature: PositiveCreature,
+    NegativePerson: NegativePerson
 }

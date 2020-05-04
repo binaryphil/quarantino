@@ -5,163 +5,201 @@ const Actors = require('./entities/actors.js');
 /*-- Set Scene Variables --*/
 
 // Protagonist
-const protagonistName = `Joe`;
-const protagonistPsysicalHealth = 100;
+const protagonistName = "Joe";
+const protagonistPhysicalHealth = 100;
 const protagonistMentalHealth = 100;
 const protagonistPhysicalPower = 5;
 const protagonistMentalPower = 0;
 
-// Object Chair
+// Negative Object Chair
 const chairName = "uncomfortable chair";
 const chairPhysicalHealth = 15;
-const chairPhysicalPower = 5;
-const chairMentalPower = 1;
-const chairDesc = "an uncomfortable chair standing next to the desk";
-const chairUseResponse = "You sit unconfortably for the rest of the day";
-const chairTalkResponse = "The uncomfortable chair does not respond to your desperate socializing attempt";
-const chairFightResponse = "The uncomfortable chair resists your vicious attack and keeps its integrity";
-const chairFightDestroy = "The uncomfortable chair loses the battle and lays broken into pieces";
+const chairPhysicalPower = 2;
+const chairMentalPower = 5;
+const chairDesc = `an ${chairName} standing next to the desk`;
+const chairLookedResponse = `You see ${chairDesc}`;
+const chairUsedResponse = `You sit uncomfortably for the rest of the day and suffer a back pain. \nYou also feel utterly useless`;
+const chairTalkedResponse = `The ${chairName} does not respond to your desperate socializing attempt`;
+const chairFoughtResponse = `The ${chairName} resists your vicious attack and keeps its integrity`;
+const chairFoughtDestroyedResponse = `The ${chairName} loses the battle and lays broken into pieces`;
 
-// Creature Cat
+// Positive Object Colored Paper
+const coloredPaperName = "colored paper";
+const coloredPaperPhysicalHealth = 1;
+const coloredPaperPhysicalPower = 1;
+const coloredPaperMentalPower = 10;
+const coloredPaperDesc = `a yellow ${coloredPaperName} laying on the floor`;
+const coloredPaperLookedResponse = `You see ${coloredPaperDesc}`;
+const coloredPaperUsedResponse = `You pick up the ${coloredPaperName} and start folding it in strange ways. \nTo your surprise it kind of looks like a deformed origami. \nYou feel a euphoric wave of accomplishment`;
+const coloredPaperTalkedResponse = `The ${coloredPaperName} will not answer to any calls from this particular dimension. \nThat makes you wonder... about physics... and stuff..`;
+const coloredPaperFoughtResponse = `The ${coloredPaperName} resists your irrational attack and keeps its integrity`;
+const coloredPaperFoughtDestroyedResponse = `The ${coloredPaperName} loses the battle and lays torn into pieces`;
+
+// Positive Creature Cat
 const catName = "grumpy cat";
 const catPhysicalHealth = 20;
 const catMentalHealth = 15;
-const catPhysicalPower = 10;
-const catMentalPower = 5;
-const catDesc = "a grumpy cat with a judgmental look";
-const catUseResponse = "You caress the grumpy cat and your existance fills with serenity";
-const catTalkResponse = "The cat seems to agree with what you imply";
-const catFightResponse = "The grumpy cat looks even grumpier now";
-const catFightDestroy = "Powerless against your raging blows and unearthy screams, the grumpy cat has a nervous breakdown and finally succumbs to its injuries";
+const catPhysicalPower = 20;
+const catMentalPower = 10;
+const catDesc = `a ${catName} with a judgmental look`;
+const catLookedResponse = `You see ${catDesc}`;
+const catUsedResponse = `You caress the ${catName} and your existence fills with serenity`;
+const catTalkedResponse = `The ${catName} seems to agree with what you imply`;
+const catFoughtResponse = `The ${catName} looks even grumpier now`;
+const catFoughtDestroyedResponse = `Powerless against your raging blows and unearthly screams, the ${catName} has a nervous breakdown and finally succumbs to its injuries`;
 
-// Creature Flatmate
+// Negative Person Flatmate
 const flatmateName = "your flat mate";
 const flatmatePhysicalHealth = 15;
 const flatmateMentallHealth = 15;
 const flatmatePhysicalPower = 10;
-const flatmateMentalPower = -20;
-const flatmateDesc = "your flat mate sitting idle on the couch";
-const flatmateUseResponse = "You try to fist bump your flatmate but he high fives you instead and then the whole scene becomes weird. You feel weird";
-const flatmateTalkResponse = "Your flatmate does not seem to respond. You think maybe because he was born without ears, but you're not sure";
-const flatmateFightResponse = "Your flatmate looks buffled by your aggressive move";
-const flatmateFightDestroy = "Not able to confront your inexplicable furry, your flatmate suffers a stroke and finally succumbs to his injuries";
+const flatmateMentalPower = 10;
+const flatmateDesc = `${flatmateName} sitting idle on the couch`;
+const flatmateLookedResponse = `You see ${flatmateDesc}.`;
+const flatmateUsedResponse = `You try to fist bump ${flatmateName} but he high fives you instead and then the whole scene becomes weird. \nYou feel weird`;
+const flatmateTalkedResponse = `Your flatmate does not seem to respond. You think maybe because he was born without ears, but you're not sure`;
+const flatmateFoughtResponse = `Your flatmate looks baffled by your aggressive move`;
+const flatmateFoughtDestroyedResponse = `Not able to confront your inexplicable furry, ${flatmateName} suffers a stroke and finally succumbs to his injuries`;
 
 /*-- Set Scene Instances --*/
 const protagonist = new Protagonist(
     protagonistName, 
-    protagonistPsysicalHealth, 
+    protagonistPhysicalHealth, 
     protagonistMentalHealth, 
     protagonistPhysicalPower,
     protagonistMentalPower);
 
-const chair = new Actors.Object(
+const coloredPaper = new Actors.PositiveObject(
+    coloredPaperName,
+    coloredPaperPhysicalHealth, 
+    coloredPaperPhysicalPower,
+    coloredPaperMentalPower,
+    coloredPaperDesc,
+    coloredPaperLookedResponse,
+    coloredPaperUsedResponse, 
+    coloredPaperTalkedResponse, 
+    coloredPaperFoughtResponse, 
+    coloredPaperFoughtDestroyedResponse);
+
+const chair = new Actors.NegativeObject(
     chairName, 
     chairPhysicalHealth, 
     chairPhysicalPower,
     chairMentalPower,
-    chairDesc, 
-    chairUseResponse, 
-    chairTalkResponse, 
-    chairFightResponse, 
-    chairFightDestroy);
+    chairDesc,
+    chairLookedResponse,
+    chairUsedResponse, 
+    chairTalkedResponse, 
+    chairFoughtResponse, 
+    chairFoughtDestroyedResponse);
 
-const cat = new Actors.Creature(
+const cat = new Actors.PositiveCreature(
     catName, 
     catPhysicalHealth,
     catMentalHealth,
     catPhysicalPower,
     catMentalPower,
-    catDesc, 
-    catUseResponse, 
-    catTalkResponse, 
-    catFightResponse, 
-    catFightDestroy);
+    catDesc,
+    catLookedResponse,
+    catUsedResponse, 
+    catTalkedResponse, 
+    catFoughtResponse, 
+    catFoughtDestroyedResponse);
 
-const flatmate = new Actors.Person(
+const flatmate = new Actors.NegativePerson(
     flatmateName, 
     flatmatePhysicalHealth, 
     flatmateMentallHealth,
     flatmatePhysicalPower,
     flatmateMentalPower,
-    flatmateDesc, 
-    flatmateUseResponse, 
-    flatmateTalkResponse, 
-    flatmateFightResponse, 
-    flatmateFightDestroy);
+    flatmateDesc,
+    flatmateLookedResponse,
+    flatmateUsedResponse, 
+    flatmateTalkedResponse, 
+    flatmateFoughtResponse, 
+    flatmateFoughtDestroyedResponse);
 
 /*-- Actions --*/
 
+// Colored Paper
+protagonist.look(coloredPaper);
+console.log("");
+
+protagonist.talk(coloredPaper);
+console.log("");
+
+protagonist.use(coloredPaper);
+console.log("");
+
+protagonist.fight(coloredPaper);
+console.log("");
+
+protagonist.fight(coloredPaper);
+console.log("");
+
 // Chair
 protagonist.look(chair);
-console.log('');
+console.log("");
+
+protagonist.look(chair);
+console.log("");
 
 protagonist.talk(chair);
-console.log('');
+console.log("");
 
 protagonist.use(chair);
-console.log('');
+console.log("");
 
 protagonist.fight(chair);
-console.log('');
+console.log("");
 
 protagonist.fight(chair);
-console.log('');
+console.log("");
 
 protagonist.fight(chair);
-console.log('');
-
-protagonist.fight(chair);
-console.log('');
+console.log("");
 
 // Cat
 protagonist.look(cat);
-console.log('');
+console.log("");
 
 protagonist.talk(cat);
-console.log('');
+console.log("");
 
 protagonist.use(cat);
-console.log('');
+console.log("");
 
 protagonist.fight(cat);
-console.log('');
+console.log("");
 
 protagonist.fight(cat);
-console.log('');
+console.log("");
 
 protagonist.fight(cat);
-console.log('');
+console.log("");
 
-protagonist.fight(cat);
-console.log('');
+protagonist.use(cat);
+console.log("");
 
-protagonist.fight(cat);
-console.log('');
-
-// Flatmate
+// // Flatmate
 protagonist.look(flatmate);
-console.log('');
+console.log("");
 
 protagonist.talk(flatmate);
-console.log('');
+console.log("");
 
 protagonist.use(flatmate);
-console.log('');
-
-protagonist.use(flatmate);
-console.log('');
+console.log("");
 
 protagonist.fight(flatmate);
-console.log('');
+console.log("");
 
 protagonist.fight(flatmate);
-console.log('');
+console.log("");
 
 protagonist.fight(flatmate);
-console.log('');
+console.log("");
 
-protagonist.fight(flatmate);
-console.log('');
+protagonist.fight(cat);
+console.log("");
 
-protagonist.look(flatmate);
-console.log('');
