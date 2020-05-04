@@ -1,4 +1,6 @@
 /*-- Import Modules --*/
+
+// Main Actor Superclass
 class Actor {
     constructor(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
         this.name = name;
@@ -44,6 +46,138 @@ class Actor {
         this.showAction(action, this.fightCount);
         (this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
+    passiveLook() {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showLookedResponse();
+        }
+    }
+    positiveLookMental(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            showLookedResponse();
+            protagonist.gainMentalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    negativeLookMental(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showLookedResponse();
+            protagonist.loseMentalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    negativelUse(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showUsedResponse();
+            protagonist.loseHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    passiveUse() {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showUsedResponse();
+        }
+    }
+    positiveUseMental(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showUsedResponse();
+            protagonist.gainMentalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    negativeUseMental(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showUsedResponse();
+            protagonist.loseMentalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    positiveUsePhysical(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showUsedResponse();
+            protagonist.gainPhysicalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    negativeUsePhysical(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showUsedResponse();
+            protagonist.losePhysicalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    passiveTalk() {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showTalkedResponse();
+        }
+    }
+    positiveTalkMental(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showTalkedResponse();
+            protagonist.gainMentalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    negativeTalkMental(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.showTalkedResponse();
+            protagonist.loseMentalHealth(this);
+            protagonist.showHealthIfAlive();
+        }
+    }
+    passiveFight() {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.loseHealth(protagonist);
+            this.showFoughtResponse();
+            if (this.isDead()) {
+                // Object Dies
+                this.showFoughtDestroyedResponse();
+            }
+        }
+    }
+    normalFight(protagonist) {
+        if (this.isDead()) {
+            this.showAlreadyDead();
+        } else {
+            this.loseHealth(protagonist);
+            protagonist.loseHealth(this);
+            if (this.isDead()) {
+                // Object Dies
+                this.showFoughtDestroyedResponse();
+                protagonist.showHealthIfAlive();
+            } else {
+                // Object Fights Back
+                protagonist.fightObjectResponse(this);
+                this.showFoughtResponse();
+                protagonist.showHealthIfAlive();
+            }
+        }
+    }
     showAction(action, count) {
         console.log(`[${action} ${this.the}${this.name} (${action} ${count})]`);
     }
@@ -69,8 +203,32 @@ class Actor {
             return false;
         }
     }
+    showLookIntro() {
+        console.log(`You choose to take a closer look at ${this.the}${this.name}${this.actionAgainText1}.`);
+    }
+    showUseIntro() {
+        console.log(`You choose to make use of ${this.the}${this.name}${this.actionAgainText2}, in some peculiar way.`);
+    }
+    showTalkIntro() {
+        console.log(`You choose to engage into conversation with ${this.the}${this.name}${this.actionAgainText1}.`);
+    }
     showFightIntro(seems) {
         console.log(`You choose to fight ${this.the}${this.name}${this.actionAgainText1}, even though it seems ${seems}.`);
+    }
+    showLookedResponse() {
+        this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
+    }
+    showUsedResponse() {
+        this.showText(`${this.usedResponse}.`);
+    }
+    showTalkedResponse() {
+        this.showText(`${this.talkedResponse}.`);
+    }
+    showFoughtResponse() {
+        this.showText(`${this.foughtResponse}.`);
+    }
+    showFoughtDestroyedResponse() {
+        this.showText(`${this.foughtDestroyedResponse}.`);
     }
     showAlreadyDead() {
         console.log(`To your deceit, ${this.the}${this.name} is no more.`);
@@ -85,222 +243,52 @@ class Actor {
     }
 }
 
-class PassiveObject extends Actor {
+// Actror Main Sub Classes
+class Object extends Actor {
     looked() {
         super.looked();
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
-        }
+        this.showLookIntro();
     }
     used(protagonist) {
         super.used(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.usedResponse}.`);
-        }
+        this.showUseIntro();
     }
     talked(protagonist) {
         super.talked(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.talkedResponse}.`);
-        }
+        this.showTalkIntro();
     }
     fought(protagonist) {
         super.fought(protagonist);
         this.seems = "pointless";
         this.showFightIntro(this.seems);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            // Object is Alive
-            this.loseHealth(protagonist);
-            if (this.isDead()) {
-                // Object Dies
-                this.showText(`${this.foughtDestroyedResponse}.`);
-            } 
-        }
     }
 }
 
-class PositiveObject extends Actor {
-    looked() {
-        super.looked();
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
-        }
-    }
-    used(protagonist) {
-        super.used(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.usedResponse}.`);
-            protagonist.gainMentalHealth(this);
-            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-        }
-    }
-    talked(protagonist) {
-        super.talked(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.talkedResponse}.`);
-        }
-    }
-    fought(protagonist) {
-        super.fought(protagonist);
-        this.seems = "pointless";
-        this.showFightIntro(this.seems);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            // Object is Alive
-            this.loseHealth(protagonist);
-            protagonist.loseHealth(this);
-            if (this.isDead()) {
-                // Object Dies
-                this.showText(`${this.foughtDestroyedResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            } else {
-                // Object Fights Back
-                protagonist.fightObjectResponse(this);
-                this.showText(`${this.foughtResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            }
-        }
-    }
-}
-
-class NegativeObject extends Actor {
-    looked() {
-        super.looked();
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
-        }
-    }
-    used(protagonist) {
-        super.used(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.usedResponse}.`);
-            protagonist.loseHealth(this);
-            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-        }
-    }
-    talked(protagonist) {
-        super.talked(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.talkedResponse}.`);
-        }
-    }
-    fought(protagonist) {
-        super.fought(protagonist);
-        this.seems = "pointless";
-        this.showFightIntro(this.seems);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            // Object is Alive
-            this.loseHealth(protagonist);
-            protagonist.loseHealth(this);
-            if (this.isDead()) {
-                // Object Dies
-                this.showText(`${this.foughtDestroyedResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            } else {
-                // Object Fights Back
-                protagonist.fightObjectResponse(this);
-                this.showText(`${this.foughtResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            }
-        }
-    }
-}
-
-class PositiveCreature extends Actor {
+class Creature extends Actor {
     constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
         super(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse);
         this.mentalHealth = mentalHealth;
     }
     looked() {
         super.looked();
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
-        }
+        this.showLookIntro();
     }
     used(protagonist) {
         super.used(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.usedResponse}.`);
-            protagonist.gainMentalHealth(this);
-            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-        }
+        this.showUseIntro();
     }
     talked(protagonist) {
         super.talked(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.talkedResponse}.`);
-        }
+        this.showTalkIntro();
     }
     fought(protagonist) {
         super.fought(protagonist);
-        this.seems = "pointless";
+        this.seems = "inappropriate";
         this.showFightIntro(this.seems);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            // Object is Alive
-            this.loseHealth(protagonist);
-            protagonist.loseHealth(this);
-            if (this.isDead()) {
-                // Object Dies
-                this.showText(`${this.foughtDestroyedResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            } else {
-                // Object Fights Back
-                protagonist.fightObjectResponse(this);
-                this.showText(`${this.foughtResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            }
-        }
     }
 }
 
-class NegativePerson extends Actor {
+class Person extends Actor {
     constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
         super(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse);
         this.mentalHealth = mentalHealth;
@@ -308,63 +296,369 @@ class NegativePerson extends Actor {
     }
     looked() {
         super.looked();
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.lookedResponse}${this.actionAgainText2}.`);
-        }
+        this.showLookIntro();
     }
     used(protagonist) {
         super.used(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.usedResponse}.`);
-            protagonist.loseMentalHealth(this);
-            (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-        }
+        this.showUseIntro();
     }
     talked(protagonist) {
         super.talked(protagonist);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            this.showText(`${this.talkedResponse}.`);
-        }
+        this.showTalkIntro();
     }
     fought(protagonist) {
         super.fought(protagonist);
         this.seems = "dangerous";
         this.showFightIntro(this.seems);
-        if (this.isDead()) {
-            // Object is Already Dead
-            this.showAlreadyDead();
-        } else {
-            // Object is Alive
-            this.loseHealth(protagonist);
-            protagonist.loseHealth(this);
-            if (this.isDead()) {
-                // Object Dies
-                this.showText(`${this.foughtDestroyedResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            } else {
-                // Object Fights Back
-                protagonist.fightObjectResponse(this);
-                this.showText(`${this.foughtResponse}.`);
-                (protagonist.isDead()) ? protagonist.isDeadText(): protagonist.showHealth();
-            }
-        }
+    }
+}
+
+// Object Sub Classes
+class PassiveObject extends Object {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.passiveUse();
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.passiveFight();
+    }
+}
+
+class PositiveUsePhysicalObject extends Object {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.positiveUsePhysical(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class PositiveUseMentalObject extends Object {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.positiveUseMental(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUsePhysicalObject extends Object {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativeUsePhysical(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUseMentalObject extends Object {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativeUseMental(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUseObject extends Object {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativelUse(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+// Creature Sub Classes
+class PassiveCreature extends Creature {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.passiveUse();
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.passiveFight();
+    }
+}
+
+class PositiveUsePhysicalCreature extends Creature {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.positiveUsePhysical(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class PositiveUseMentalCreature extends Creature {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.positiveUseMental(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUsePhysicalCreature extends Creature {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativeUsePhysical(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUseMentalCreature extends Creature {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativeUseMental(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUseCreature extends Creature {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativelUse(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+// People Sub Classes
+class PassivePerson extends Person {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.passiveUse();
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.passiveFight();
+    }
+}
+
+class PositiveUsePhysicalPerson extends Person {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.positiveUsePhysical(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class PositiveUseMentalPerson extends Person {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.positiveUseMental(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUseMentalPerson extends Person {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativeUseMental(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
+    }
+}
+
+class NegativeUsePerson extends Person {
+    looked() {
+        super.looked();
+        this.passiveLook();
+    }
+    used(protagonist) {
+        super.used(protagonist);
+        this.negativelUse(protagonist);
+    }
+    talked(protagonist) {
+        super.talked(protagonist);
+        this.passiveTalk();
+    }
+    fought(protagonist) {
+        super.fought(protagonist);
+        this.normalFight(protagonist);
     }
 }
 
 module.exports = {
     Actor: Actor,
+    Object: Object,
+    Creature: Creature,
+    Person: Person,
     PassiveObject: PassiveObject,
-    PositiveObject: PositiveObject,
-    NegativeObject: NegativeObject,
-    PositiveCreature: PositiveCreature,
-    NegativePerson: NegativePerson
+    PositiveUseMentalObject: PositiveUseMentalObject,
+    NegativeUseMentalObject: NegativeUseMentalObject,
+    PositiveUsePhysicalObject: PositiveUsePhysicalObject,
+    NegativeUsePhysicalObject: NegativeUsePhysicalObject,
+    NegativeUseObject: NegativeUseObject,
+    PassiveCreature: PassiveCreature,
+    PositiveUsePhysicalCreature: PositiveUsePhysicalCreature,
+    PositiveUseMentalCreature: PositiveUseMentalCreature,
+    NegativeUsePhysicalCreature: NegativeUsePhysicalCreature,
+    NegativeUseMentalCreature: NegativeUseMentalCreature,
+    NegativeUseCreature: NegativeUseCreature,
+    PassivePerson: PassivePerson,
+    PositiveUsePhysicalPerson: PositiveUsePhysicalPerson,
+    PositiveUseMentalPerson: PositiveUseMentalPerson,
+    NegativeUseMentalPerson: NegativeUseMentalPerson,
+    NegativeUsePerson: NegativeUsePerson
 }

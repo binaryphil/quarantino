@@ -53,6 +53,9 @@ class Protagonist {
     afterDeathText() {
         console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
     }
+    showHealthIfAlive() {
+        (this.isDead()) ? this.isDeadText(): this.showHealth();
+    }
     showHealth() {
         console.log(`You now have ${this.physicalHealth} Health points and ${this.mentalHealth} Mental points left.`);
     }

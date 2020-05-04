@@ -69,7 +69,7 @@ const protagonist = new Protagonist(
     protagonistPhysicalPower,
     protagonistMentalPower);
 
-const coloredPaper = new Actors.PositiveObject(
+const coloredPaper = new Actors.PositiveUseMentalObject(
     coloredPaperName,
     coloredPaperPhysicalHealth, 
     coloredPaperPhysicalPower,
@@ -81,7 +81,7 @@ const coloredPaper = new Actors.PositiveObject(
     coloredPaperFoughtResponse, 
     coloredPaperFoughtDestroyedResponse);
 
-const chair = new Actors.NegativeObject(
+const chair = new Actors.NegativeUseObject(
     chairName, 
     chairPhysicalHealth, 
     chairPhysicalPower,
@@ -93,7 +93,7 @@ const chair = new Actors.NegativeObject(
     chairFoughtResponse, 
     chairFoughtDestroyedResponse);
 
-const cat = new Actors.PositiveCreature(
+const cat = new Actors.PositiveUseMentalCreature(
     catName, 
     catPhysicalHealth,
     catMentalHealth,
@@ -106,7 +106,7 @@ const cat = new Actors.PositiveCreature(
     catFoughtResponse, 
     catFoughtDestroyedResponse);
 
-const flatmate = new Actors.NegativePerson(
+const flatmate = new Actors.NegativeUseMentalPerson(
     flatmateName, 
     flatmatePhysicalHealth, 
     flatmateMentallHealth,
@@ -198,6 +198,12 @@ protagonist.fight(flatmate);
 console.log("");
 
 protagonist.fight(flatmate);
+console.log("");
+
+protagonist.look(chair);
+console.log("");
+
+protagonist.look(coloredPaper);
 console.log("");
 
 protagonist.fight(cat);
