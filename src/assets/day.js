@@ -19,7 +19,7 @@ class Day {
 		console.log('This is what you see inside the room:\n');
 		
 		this.actors.forEach(function(actor, index, array) {
-			console.log(`${index}. ${actor}\n`);
+			console.log(`${index}. ${actor.description}\n`);
 		});
 	}
 }

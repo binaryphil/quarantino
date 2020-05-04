@@ -1,103 +1,130 @@
-const actor_generator = require('./generator');
-const ask_question = require('./interface');
+const ActorGenerator = require('./generator');
+const askQuestion = require('./interface');
 
 class Game {
-	constructor (day, protagonist, actors) {
+	constructor (day, protagonist, objects, creatures, persons) {
 		this.day = day;
 		this.protagonist = protagonist;
-		this.actors = actors;
-		this.generator = actor_generator();
-		this.description = "This a game of balance...";
+		this.generator = new ActorGenerator(objects, creatures, persons);
+		this.description = "This is a game of balance...";
 
 		// How many actions a player has each day
 		this.no_of_actions = 3;
 	}
 
-	gameLoop() {
-		console.log(this.dscripion);
-		while (!this.protagonist.isDead() && (this.day.counter < 40)) {
+	mainLoop() {
+		// First day
+		console.clear();
+		console.log(this.description);
+		this.day.describe();
+		this.playerTurn();
+
+		// main loop
+		while (true) {
+			console.log(this.protagonist.alive);
 			// check if protagonist is dead
-			if (isPlayerDead()){
+			if (!this.protagonist.alive) {
 				return;
 			}
-		}
+			
+			// check if player won the game
+			if (this.isGameWon()) {
+				return
+			}
 
+			//normal turn
+			console.clear();
+			this.newTurn();
+			this.playerTurn();
+			this.endTurn();
+		}
 	}
 
 	newTurn() {
-		this.actor = this.genrator.newActors();
-		this.day.nextDay(actor);
+		let new_actors = this.generator.newActors();
+		this.day.nextDay(new_actors);
 		this.day.describe();
 	}
 	
 	endTurn() {
-		
-		if (this.day.counter > 40) {
-			console.log("You son of a bitch, you made it!");
-			return;
-		};
+		// checks if any actor is dead, and removes them
+		// for (let [index, actor] of this.day.actors.entries()) {
+		//	if (actor.isDead()){
+		//		this.actors.splice(index, 1);
+		//	};
+		//};
+	}
 
-		for (let [index, actor] of this.actors.entries()) {
-			if (actor.isDead()){
-				this.actors.splice(index, 1);
-			};
-		};
+	playerTurn() {
+		let max = this.no_of_actions + 1;
+		for (let i=1; i < max; i++) {
+			console.log(`Action no${i} of the day`)
+			this.playerAction();
+		}
 	}
 
 	playerAction() {
 		let actor = this.chooseActor();		
+		console.log(`So you chose ${actor.description} to interact with`);
 		let action = this.chooseAction();
 
 		switch(action) {
-			case 1:
+			case 'look':
+				console.log('So you choose to look');
 				this.protagonist.look(actor);
 				break;
-			case 2:
+			case 'use':
+				console.log('So you choose to use');
 				this.protagonist.use(actor);
 				break;
-			case 3:
+			case 'fight':
+				console.log('So you choose to fight');
 				this.protagonist.fight(actor);
 				break;
-			case 4:
+			case 'talk':
+				console.log('So you choose to talk');
 				this.protagonist.talk(actor);
 				break;
 			default:
-				console.log("You picked a wrong choice, fool... How hard can it be?")
+				console.log("You picked a wrong choice, fool... How hard can it be?");
 		}
 	}
 
 	chooseActor() {
 		var index;
-		var question = "Who do you want to interact with?";
-		var answer_text = "So this is your choice!";
+		var question = "Who do you want to interact with?\n";
 
-		ask_question(question, answer_text).then(answer => {
-			index = answer;
-		});
+		let actor_index = askQuestion(question);
 
-		return index;
+		let actor = this.day.actors[actor_index];
+
+		return actor;
 	}
 
 	chooseAction() {
 		var index;
-		var question = "How will you choose to act?"
-		var answer_text = "So this is your choice!"
+		var question = "How will you choose to act?\n"
 
-		question(question, answer_text).then(answer => {
-			index = answer;
-		});
+		let action = askQuestion(question);
 
-		return index;
+		return action;
 	}
 
 	isPlayerDead() {
 		if (this.protagonist.isDead()) {
-			console.log("Game over dude!");
-			return True;
+			console.log("Game over dude!\n");
+			return true;
 		};
-		return False;
+		return false;
 	}
 
+	isGameWon() {
+		if (this.day.counter > 40) {
+			console.log("You did it, you son of a bitch!\n");
+			return true;
+		}
+		return false;
+	}
 }
 
 module.exports = Game

@@ -1,17 +1,8 @@
-const readline = require('readline');
+const readlineSync = require('readline-sync');
 
-function askQuestion(question, answer_text) {
-	return new Promise(function(resolve, reject) {    
-		const rl = readline.createInterface({
-			input:  process.stdin,
-			output: process.stdout
-		});
-		rl.question(question, (answer) => {
-			resolve(answer);
-			console.log(answer_text, answer);
-			rl.close();
-		});
-	});   
+function askQuestion(question) {
+	let	answer = readlineSync.question(question);
+  return answer;
 }
 
 module.exports = askQuestion;

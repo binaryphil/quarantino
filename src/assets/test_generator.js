@@ -1,0 +1,37 @@
+const actor_generator = require('./generator'); 
+
+var objects = ['Chair', 'Table', 'Bed', 'Bathtub'];
+var creatures = ['Cat', 'Dog', 'Bunny'];
+var persons = ['Jim', 'Bob', 'Nick', 'Deborah'];
+var ag = new actor_generator(objects, persons, creatures);
+
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
+actors = ag.newActors();
+console.log(actors);
