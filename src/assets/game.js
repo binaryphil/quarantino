@@ -52,7 +52,7 @@ class Game {
 		//	if (actor.isDead()){
 		//		this.actors.splice(index, 1);
 		//	};
-		};
+		//};
 	}
 
 	playerTurn() {
