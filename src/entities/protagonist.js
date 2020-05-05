@@ -50,7 +50,7 @@ class Protagonist {
     isDeadText() {
         console.log('This is too much... You suffer a mental and physical breakdown and you die a pointless death.');
     }
-    afterDeathText() {
+    showAfterDeathText() {
         console.log('Your soul seems no longer present. It has probably taken its eternal course to the cosmos.');
     }
     showHealthIfAlive() {
