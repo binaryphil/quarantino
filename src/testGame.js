@@ -1,10 +1,10 @@
 /*-- Import Modules --*/
 const Protagonist = require('../entities/protagonist.js');
 const Actors = require('../entities/actors.js');
-
 const Game = require('./game');
 const Day = require('./day');
-/*-- Set Scene Variables --*/
+
+/*-- Set Actor Variables --*/
 
 // Protagonist
 const protagonistName = "Joe";
@@ -63,7 +63,7 @@ const flatmateTalkedResponse = `Your flatmate does not seem to respond. You thin
 const flatmateFoughtResponse = `Your flatmate looks baffled by your aggressive move`;
 const flatmateFoughtDestroyedResponse = `Not able to confront your inexplicable furry, ${flatmateName} suffers a stroke and finally succumbs to his injuries`;
 
-/*-- Set Scene Instances --*/
+/*-- Set Actor Instances --*/
 const protagonist = new Protagonist(
     protagonistName, 
     protagonistPhysicalHealth, 
@@ -121,17 +121,16 @@ const flatmate = new Actors.NegativeUseMentalPerson(
     flatmateFoughtResponse, 
     flatmateFoughtDestroyedResponse);
 
+/*-- Set Actor Arrays --*/
+const objects = [coloredPaper, chair]
+const persons = [flatmate];
+const creatures = [cat];
+const initialActors = [cat, flatmate, chair]
 
-let objects = [coloredPaper, chair]
+/*-- Set Day Instance --*/
+const day = new Day(initialActors);
 
+/*-- Set Game Instance --*/
+const game = new Game(day, protagonist, objects, creatures, persons);
 
-let persons = [flatmate];
-
-let creatures = [cat];
-let initial = [cat, flatmate, chair]
-
-let player = new Protagonist('Jimbo');
-let day = new Day(initial);
-let game = new Game(day, player, objects, creatures, persons);
-game.mainLoop();
-
+game.gameStart();
