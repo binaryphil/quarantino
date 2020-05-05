@@ -1,8 +1,8 @@
 class Day {
 	constructor(actors) {
 		this.actors = actors;
-
-		this.counter = 1;
+        this.dayCount = 1;
+        this.no_of_actions = 3; // numberOfActions έλεος
 	}	
 
 	nextDay(new_actors) {
@@ -10,15 +10,15 @@ class Day {
 			this.actors.push(actor);
 		}
 
-		this.counter += 1;
+		this.dayCount += 1;
 	}
 
 	describe() {
-		console.log(`Day ${this.counter} has begun.\n`);
+		console.log(`Day ${this.dayCount} has begun.\n`);
 
 		console.log('This is what you see inside the room:\n');
 		
-		this.actors.forEach(function(actor, index, array) {
+		this.actors.forEach(function(actor, index) {
 			console.log(`${index}. ${actor.desc}\n`);
 		});
 	}

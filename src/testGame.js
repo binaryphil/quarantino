@@ -1,8 +1,8 @@
 /*-- Import Modules --*/
-const Protagonist = require('./entities/protagonist.js');
-const Actors = require('./entities/actors.js');
-const Game = require('./assets/game.js');
-const Day = require('./assets/day.js');
+const Protagonist = require('./entities/protagonist');
+const Actors = require('./entities/actors');
+const Game = require('./assets/game');
+const Day = require('./assets/day');
 
 /*-- Set Actor Variables --*/
 
