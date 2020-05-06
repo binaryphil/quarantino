@@ -1,26 +1,33 @@
+
+const ActorGenerator = require('./actorGenerator');
+
 class Day {
-	constructor(actors) {
-		this.actors = actors;
+	constructor(actors, objects, creatures, persons) {
+        this.actors = actors;
+        this.actorGenerator = new ActorGenerator(objects, creatures, persons);
+        // this.dayDescription = dayDescription;
         this.dayCount = 1;
-        this.no_of_actions = 3; // numberOfActions έλεος
-	}	
-
-	nextDay(new_actors) {
-		for (const actor of new_actors) {
-			this.actors.push(actor);
-		}
-
-		this.dayCount += 1;
-	}
-
-	describe() {
-		console.log(`Day ${this.dayCount} has begun.\n`);
-
-		console.log('This is what you see inside the room:\n');
-		
-		this.actors.forEach(function(actor, index) {
-			console.log(`${index}. ${actor.desc}\n`);
-		});
+    }    
+    newDay() {
+        let newActors = this.actorGenerator.newActors();
+        this.addNewActors(newActors);
+        this.dayCount += 1;
+    }
+    addNewActors(newActors) {
+        for (const actor of newActors) {
+            this.actors.push(actor);
+        }
+    }
+    showTitle() {
+        console.log(`-- Day ${this.dayCount} --\n`);
+    }
+    showActors() {
+        this.actors.forEach(function (actor, index) {
+            console.log(`${index + 1}. ${actor.desc}`);
+        });
+    }
+	showDescription() {
+		console.log('Inside the room you see:\n');
 	}
 }
 

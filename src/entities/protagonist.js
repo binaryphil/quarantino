@@ -57,7 +57,7 @@ class Protagonist {
         (this.isDead()) ? this.isDeadText(): this.showHealth();
     }
     showHealth() {
-        console.log(`You now have ${this.physicalHealth} Health points and ${this.mentalHealth} Mental points left.`);
+        console.log(`\nYou now have ${this.physicalHealth} Health points and ${this.mentalHealth} Mental points left.`);
     }
     showSameHealth() {
         console.log(`You still have ${this.physicalHealth} Health points and ${this.mentalHealth} Mental points left.`);

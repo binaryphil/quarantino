@@ -25,25 +25,25 @@ class Actor {
     looked(protagonist) {
         this.lookCount++;
         const action = "Look at";
-        this.showAction(action, this.lookCount);
+        // this.showAction(action, this.lookCount);
         (this.lookCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
     used(protagonist) {
         this.useCount++;
         const action = "Use";
-        this.showAction(action, this.useCount);
+        // this.showAction(action, this.useCount);
         (this.useCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
     talked(protagonist) {
         this.talkCount++;
         const action = "Talk to";
-        this.showAction(action, this.talkCount);
+        // this.showAction(action, this.talkCount);
         (this.talkCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
     fought(protagonist) {
         this.fightCount++;
         const action = "Fight";
-        this.showAction(action, this.fightCount);
+        // this.showAction(action, this.fightCount);
         (this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
     passiveLook() {

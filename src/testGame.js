@@ -59,7 +59,7 @@ const flatmateMentalPower = 10;
 const flatmateDesc = `${flatmateName} sitting idle on the couch`;
 const flatmateLookedResponse = `You see ${flatmateDesc}.`;
 const flatmateUsedResponse = `You try to fist bump ${flatmateName} but he high fives you instead and then the whole scene becomes weird. \nYou feel weird`;
-const flatmateTalkedResponse = `Your flatmate does not seem to respond. You think maybe because he was born without ears, but you're not sure`;
+const flatmateTalkedResponse = `Your flatmate does not seem to respond.\nYou think maybe because he was born without ears, but you're not sure`;
 const flatmateFoughtResponse = `Your flatmate looks baffled by your aggressive move`;
 const flatmateFoughtDestroyedResponse = `Not able to confront your inexplicable furry, ${flatmateName} suffers a stroke and finally succumbs to his injuries`;
 
@@ -121,16 +121,26 @@ const flatmate = new Actors.NegativeUseMentalPerson(
     flatmateFoughtResponse, 
     flatmateFoughtDestroyedResponse);
 
-/*-- Set Actor Arrays --*/
+/*-- Set Day Variables --*/
+// const day1Description = "This is your first day. You wake up sleepy."
+// const day2Description = "This is your second day. You wake up even sleepier."
+
+/*-- Set Actors Arrays --*/
 const objects = [coloredPaper, chair]
 const persons = [flatmate];
 const creatures = [cat];
-const initialActors = [cat, flatmate, chair]
+const initialActors = [cat, flatmate, chair];
 
 /*-- Set Day Instance --*/
-const day = new Day(initialActors);
+// const day1 = new Day(day1Description);
+// const day2 = new Day(day2Description);
+
+const day = new Day(initialActors, objects, creatures, persons);
+
+/*-- Set Days Array --*/
+// const days = [day1, day2];
 
 /*-- Set Game Instance --*/
-const game = new Game(day, protagonist, objects, creatures, persons);
+const game = new Game(day, protagonist, initialActors);
 
 game.gameStart();
