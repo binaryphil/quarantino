@@ -57,7 +57,7 @@ class Actor {
         if (this.isDead()) {
             this.showAlreadyDead();
         } else {
-            showLookedResponse();
+            this.showLookedResponse();
             protagonist.gainMentalHealth(this);
             protagonist.showHealthIfAlive();
         }
