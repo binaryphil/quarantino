@@ -2,7 +2,7 @@
 const askQuestion = require('./interface');
 
 class Game {
-	constructor(day, protagonist, initialActors, objects, creatures, persons) {
+	constructor(day, protagonist, initialActors) {
 		this.day = day;
 		this.protagonist = protagonist;
 		this.initialActors = initialActors; // Οι initial actors δε θα έπρεπει να περνάνε στο game;
