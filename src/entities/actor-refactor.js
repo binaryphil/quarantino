@@ -14,6 +14,9 @@ class Actor {
 									   'talked': 0,
 					           'fighted': 0.};
 		
+		this.health = {'physical': 100,
+									 'mental': 100};
+
 		this.the = "the ";
 		this.actionAgainText1 = "";
 		this.actionAgainText2 = "";
@@ -68,6 +71,10 @@ class Actor {
 		(this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
+	loseHealth(type, loss) {
+		this.health[type] -= loss;
+	}
+
 	showAction(action, count) {
 		console.log(`[${action} ${this.the}${this.name} (${action} ${count})]`);
 	}
@@ -81,6 +88,7 @@ class Actor {
 		this.actionAgainText1 = " once again";
 		this.actionAgainText2 = " once more";
 	}
+
 }
 
 
@@ -91,8 +99,6 @@ class PhysicalBeing extends Actor {
 			super(name, description, lookedResponse, usedResponse, talkedResponse, 
 					  foughtResponse, foughtDestroyedResponse);
 			
-		  this.physicalHealth = physicalHealth;
-		  this.physicalPower = physicalPower;
 			this.the = '';
 	  }
 
@@ -110,16 +116,14 @@ class PhysicalBeing extends Actor {
 
 	  fought() {
 		  super.fought();
-			this.losePhysical
-
 	  }
 
+		
 	  losePhysicalPower(loss) {
-			this.physicalPower -= loss;
+			this.health.physical -= loss;
 	  }
 
 	  gainPhysicalPower(gain) {
-		  this.physicalPower += gain;
 	  }
 	  
 	  isAlive() {

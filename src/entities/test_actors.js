@@ -16,3 +16,5 @@ console.log(human.looked());
 console.log(human.used());
 console.log(human.talked());
 console.log(human.fought('protagonist'));
+console.log(human.loseHealth('physical', 10))
+console.log(human.health.physical);
