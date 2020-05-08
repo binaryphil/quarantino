@@ -1,8 +1,8 @@
-
 class Actor {
-    constructor(name, description, lookedresponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
+    constructor(name, description, lookedResponse, usedResponse, 
+				talkedResponse, foughtResponse, foughtDestroyedResponse) {
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         this.lookedResponse = lookedResponse;
         this.usedResponse = usedResponse;
         this.talkedResponse = talkedResponse;
@@ -53,14 +53,61 @@ class Actor {
 
         (this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
     }
+
+    showAction(action, count) {
+        console.log(`[${action} ${this.the}${this.name} (${action} ${count})]`);
+    }
+
+    resetActionAgainText() {
+        this.actionAgainText1 = "";
+        this.actionAgainText2 = "";
+    }
+
+    setActionAgainText() {
+        this.actionAgainText1 = " once again";
+        this.actionAgainText2 = " once more";
+    }
 }
 
 
-class PhysicalBeing(
-    constructor(name, description, lookedresponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse, physicalHealth=100, physicalPower=10) {
-		super(name, description, lookedresponse, usedResponse, talkedresponse, foughtresponse, foughtDestroyerdResponse);
+class PhysicalBeing extends Actor {
+    constructor(name, description, lookedResponse, usedResponse, talkedResponse, 
+				foughtResponse, foughtDestroyedResponse, physicalHealth=100, 
+				physicalPower=10) {
+		super(name, description, lookedResponse, usedResponse, talkedResponse, 
+			  foughtResponse, foughtDestroyedResponse);
+
 		this.physicalHealth = physicalHealth;
 		this.physicalPower = physicalPower;
+	}
+
+	looked() {
+		super.looked();
+	}
+
+	used() {
+		super.used();
+	}
+
+	talked() {
+		super.talked();
+	}
+
+	fought() {
+		super.fought();
+	}
+
+    showAction(action, count) {
+		super.showAction();
+    }
+
+    resetActionAgainText() {
+		super.resetActionAgainText();
+    }
+
+    setActionAgainText() {
+		super.setActionAgainText();
+	}
 
 	losePhysicalPower(loss) {
 		this.physicalPower -= loss;
@@ -71,16 +118,37 @@ class PhysicalBeing(
 	}
 	
 	isAlive() {
-		(this.physicalHealth > 0) ? return true; return false;
+		return ((this.physicalHealth > 0) ? true: false);
+	  
 	}
 }
 
-class AetherialBeing(
-	constructor(name, description, lookedresponse, usedresponse, talkedresponse, foughtresponse, foughtdestroyedresponse, mentalHealth=100, mentalPower=10) {
-		super(name, description, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyerdResponse, mentalHealth, mentalPower);
+class MentalBeing extends Actor {
+	constructor(name, description, lookedresponse, usedresponse, talkedresponse, 
+				foughtresponse, foughtdestroyedresponse, mentalHealth=100, 
+				mentalPower=10) {
+		super(name, description, lookedResponse, usedResponse, talkedResponse, 
+			  foughtResponse, foughtDestroyerdResponse, mentalHealth, mentalPower);
 		this.mentalHealth = mentalHealth;
 		this.mentalPower = physicalPower;
+	}
 	
+	looked() {
+		super.looked();
+	}
+
+	used() {
+		super.used();
+	}
+
+	talked() {
+		super.talked();
+	}
+
+	fought() {
+		super.fought();
+	}
+
 	loseMentalPower(loss) {
 		this.mentalPower -= damage;
 	}
@@ -89,6 +157,9 @@ class AetherialBeing(
 		this.mentalPower += gain;
 	}
 	
+	isAlive() {
+		return ((this.mentalHealth > 0) ? true: false);
+	}	
 }
 
 module.exports = PhysicalBeing

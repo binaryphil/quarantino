@@ -2,7 +2,9 @@
 
 // Main Actor Superclass
 class Actor {
-    constructor(name, physicalHealth, physicalPower, mentalPower, desc, lookedResponse, usedResponse, talkedResponse, foughtResponse, foughtDestroyedResponse) {
+    constructor(name, physicalHealth, physicalPower, mentalPower, desc, 
+								lookedResponse, usedResponse, talkedResponse, foughtResponse, 
+								foughtDestroyedResponse) {
         this.name = name;
         this.physicalHealth = physicalHealth;
         this.physicalPower = physicalPower;
