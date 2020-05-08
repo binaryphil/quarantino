@@ -12,19 +12,29 @@ class Actor {
 		this.actCount = {'looked': 0,
 										 'used': 0,
 									   'talked': 0,
-					           'fighted': 0.};
+					           'fighted': 0};
 		
 		this.health = {'physical': 100,
 									 'mental': 100};
 
+		this.texts = {'the': 'the ',
+									'seems': '',
+									'actionAgain1': '',
+								  'actionAgain2': ''};
 		this.the = "the ";
 		this.actionAgainText1 = "";
 		this.actionAgainText2 = "";
 		this.seems = "";
-		this.lookIntro = `You choose to take a closer look at ${this.the}${this.name}${this.actionAgainText1}.`
-		this.talkIntro = `You choose to engage into conversation with ${this.the}${this.name}${this.actionAgainText1}.`
-		this.useIntro = `You choose to make use of ${this.the}${this.name}${this.actionAgainText1}.`
-		this.fightIntro = `You choose to fight ${this.the}${this.name}${this.actionAgainText1}.`
+		this.introText = {'opening': {'looked': 'You choose to take a closer look at ',
+			                            'talked': 'You choose to engage into conversation with ',
+			                            'used': 'You choose to make use of ',
+			                            'fought': 'You choose to fight '},
+											'closing': {'looked': '.',
+												          'talked': '.',
+												          'used': ', in some peculiar way.',
+												          'fought': 'even though it seems	'}
+		                 }			 
+																
 	}
 
 	looked(protagonist) {
@@ -78,6 +88,7 @@ class Actor {
 	showAction(action, count) {
 		console.log(`[${action} ${this.the}${this.name} (${action} ${count})]`);
 	}
+
 
 	resetActionAgainText() {
 		this.actionAgainText1 = "";
