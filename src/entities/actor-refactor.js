@@ -12,7 +12,7 @@ class Actor {
 		this.actCount = {'looked': 0,
 										 'used': 0,
 									   'talked': 0,
-					           'fighted': 0};
+					           'fought': 0};
 		
 		this.health = {'physical': 100,
 									 'mental': 100};
@@ -21,28 +21,23 @@ class Actor {
 									'seems': '',
 									'actionAgain1': '',
 								  'actionAgain2': ''};
-		this.the = "the ";
-		this.actionAgainText1 = "";
-		this.actionAgainText2 = "";
-		this.seems = "";
-		this.introText = {'opening': {'looked': 'You choose to take a closer look at ',
-			                            'talked': 'You choose to engage into conversation with ',
-			                            'used': 'You choose to make use of ',
-			                            'fought': 'You choose to fight '},
-											'closing': {'looked': '.',
-												          'talked': '.',
-												          'used': ', in some peculiar way.',
-												          'fought': 'even though it seems	'}
-		                 }			 
+		
+		this.intro = {'opening': {'looked': 'You choose to take a closer look at ',
+			                        'talked': 'You choose to engage into conversation with ',
+			                        'used': 'You choose to make use of ',
+			                        'fought': 'You choose to fight '},
+									'closing': {'looked': '.',
+												      'talked': '.',
+												      'used': ', in some peculiar way.',
+												      'fought': 'even though it seems	'}
+								 }			 
 																
 	}
 
 	looked(protagonist) {
 		this.actCount.look++;
-		const action = "Look at";
-
-		this.showAction(action, this.lookCount);
-
+			
+		this.showIntro('looked');
 		console.log(this.responses.looked);
 
 		(this.lookCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
@@ -50,10 +45,8 @@ class Actor {
 
 	used(protagonist) {
 		this.actCount.use++;
-		const action = "Use";
 
-		this.showAction(action, this.useCount);
-
+		this.showIntro('used');
 		console.log(this.responses.used);
 
 		(this.useCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
@@ -61,10 +54,8 @@ class Actor {
 
 	talked(protagonist) {
 		this.actCount.talk++;
-		const action = "Talk to";
 
-		this.showAction(action, this.talkCount);
-
+		this.showIntro('talked');
 		console.log(this.responses.talked);
 
 		(this.talkCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
@@ -72,10 +63,8 @@ class Actor {
 
 	fought(protagonist) {
 		this.actCount.fight++;
-		const action = "Fight";
 
-		this.showAction(action, this.fightCount);
-
+		this.showIntro('fought');
 		console.log(this.responses.fought);
 		
 		(this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
@@ -85,10 +74,11 @@ class Actor {
 		this.health[type] -= loss;
 	}
 
-	showAction(action, count) {
-		console.log(`[${action} ${this.the}${this.name} (${action} ${count})]`);
+	showIntro(type) {
+		let intro = this.intro.opening[type] + this.texts.the + this.name + this.texts.actionAgain1 +
+			      this.intro.closing[type]
+		console.log(intro);
 	}
-
 
 	resetActionAgainText() {
 		this.actionAgainText1 = "";
@@ -110,7 +100,7 @@ class PhysicalBeing extends Actor {
 			super(name, description, lookedResponse, usedResponse, talkedResponse, 
 					  foughtResponse, foughtDestroyedResponse);
 			
-			this.the = '';
+			this.texts.the = '';
 	  }
 
 	  looked(physicalDmg, mentalDmg) {
