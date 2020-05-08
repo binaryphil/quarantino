@@ -3,15 +3,24 @@ class Actor {
 		talkedResponse, foughtResponse, foughtDestroyedResponse) {
 		this.name = name;
 		this.description = description;
+		this.responses = {'look': lookedResponse,
+						          'used': usedResponse,
+									    'talked': talkedResponse,
+				              'fought': foughtResponse,
+											'foughtDestroyed': foughtDestroyedResponse};
+
 		this.lookedResponse = lookedResponse;
 		this.usedResponse = usedResponse;
 		this.talkedResponse = talkedResponse;
 		this.foughtResponse = foughtResponse;
 		this.foughtDestroyedResponse = foughtDestroyedResponse;
-		this.lookCount = 0;
-		this.useCount = 0;
-		this.talkCount = 0;
-		this.fightCount = 0;
+
+		this.actCount = {'looked': 0,
+										 'used': 0,
+									   'talked': 0,
+					           'fighted': 0.};
+		
+
 		this.the = "the ";
 		this.actionAgainText1 = "";
 		this.actionAgainText2 = "";
@@ -23,7 +32,7 @@ class Actor {
 	}
 
 	looked(protagonist) {
-		this.lookCount++;
+		this.actCount.look++;
 		const action = "Look at";
 
 		this.showAction(action, this.lookCount);
@@ -34,7 +43,7 @@ class Actor {
 	}
 
 	used(protagonist) {
-		this.useCount++;
+		this.actCount.use++;
 		const action = "Use";
 
 		this.showAction(action, this.useCount);
@@ -45,7 +54,7 @@ class Actor {
 	}
 
 	talked(protagonist) {
-		this.talkCount++;
+		this.actCount.talk++;
 		const action = "Talk to";
 
 		this.showAction(action, this.talkCount);
@@ -56,7 +65,7 @@ class Actor {
 	}
 
 	fought(protagonist) {
-		this.fightCount++;
+		this.actCount.fight++;
 		const action = "Fight";
 
 		this.showAction(action, this.fightCount);
@@ -94,7 +103,7 @@ class PhysicalBeing extends Actor {
 			this.the = '';
 	  }
 
-	  looked() {
+	  looked(physicalDmg, mentalDmg) {
 			super.looked();
 	  }
 
@@ -108,6 +117,8 @@ class PhysicalBeing extends Actor {
 
 	  fought() {
 		  super.fought();
+			this.losePhysical
+
 	  }
 
 	  losePhysicalPower(loss) {

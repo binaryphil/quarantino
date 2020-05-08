@@ -10,6 +10,7 @@ const foughtDestroyedResponse = 'You destroyed a handsome man. Or not?';
 
 var human = new PhysicalBeing(name, description, lookResponse, usedResponse, talkResponse, foughtResponse,
 				                      foughtDestroyedResponse);
+console.log(human.actCount);
 console.log(human.isAlive());
 console.log(human.looked());
 console.log(human.used());
