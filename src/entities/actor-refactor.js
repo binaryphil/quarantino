@@ -28,6 +28,8 @@ class Actor {
 
 		this.showAction(action, this.lookCount);
 
+		console.log(this.lookedResponse);
+
 		(this.lookCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
@@ -36,6 +38,8 @@ class Actor {
 		const action = "Use";
 
 		this.showAction(action, this.useCount);
+
+		console.log(this.usedResponse);
 
 		(this.useCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
@@ -46,6 +50,8 @@ class Actor {
 
 		this.showAction(action, this.talkCount);
 
+		console.log(this.talkedResponse);
+
 		(this.talkCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
@@ -55,6 +61,8 @@ class Actor {
 
 		this.showAction(action, this.fightCount);
 
+		console.log(this.foughtResponse);
+		
 		(this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
@@ -100,7 +108,6 @@ class PhysicalBeing extends Actor {
 
 	  fought() {
 		  super.fought();
-			lose
 	  }
 
 	  losePhysicalPower(loss) {
