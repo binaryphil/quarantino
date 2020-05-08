@@ -3,24 +3,17 @@ class Actor {
 		talkedResponse, foughtResponse, foughtDestroyedResponse) {
 		this.name = name;
 		this.description = description;
-		this.responses = {'look': lookedResponse,
+		this.responses = {'looked': lookedResponse,
 						          'used': usedResponse,
 									    'talked': talkedResponse,
 				              'fought': foughtResponse,
 											'foughtDestroyed': foughtDestroyedResponse};
-
-		this.lookedResponse = lookedResponse;
-		this.usedResponse = usedResponse;
-		this.talkedResponse = talkedResponse;
-		this.foughtResponse = foughtResponse;
-		this.foughtDestroyedResponse = foughtDestroyedResponse;
 
 		this.actCount = {'looked': 0,
 										 'used': 0,
 									   'talked': 0,
 					           'fighted': 0.};
 		
-
 		this.the = "the ";
 		this.actionAgainText1 = "";
 		this.actionAgainText2 = "";
@@ -37,7 +30,7 @@ class Actor {
 
 		this.showAction(action, this.lookCount);
 
-		console.log(this.lookedResponse);
+		console.log(this.responses.looked);
 
 		(this.lookCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
@@ -48,7 +41,7 @@ class Actor {
 
 		this.showAction(action, this.useCount);
 
-		console.log(this.usedResponse);
+		console.log(this.responses.used);
 
 		(this.useCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
@@ -59,7 +52,7 @@ class Actor {
 
 		this.showAction(action, this.talkCount);
 
-		console.log(this.talkedResponse);
+		console.log(this.responses.talked);
 
 		(this.talkCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
@@ -70,7 +63,7 @@ class Actor {
 
 		this.showAction(action, this.fightCount);
 
-		console.log(this.foughtResponse);
+		console.log(this.responses.fought);
 		
 		(this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
