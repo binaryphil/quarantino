@@ -1,16 +1,16 @@
 class Actor {
-	constructor(name, description, responses,
-	            physicalHealth, physicalPower,
-	            mentalHealth, mentalPower) {
+	constructor(name, description, responses, attributes) {
 		this.name = name;
 		this.description = description;
 		this.responses = responses;
+		this.attributes = attributes;
 
 		this.actCount = {'looked': 0,
 										 'used': 0,
 									   'talked': 0,
 					           'fought': 0};
 		
+
 		this.health = {'physical': this.physicalHealth,
 									 'mental': this.MentalHealth};
 
@@ -94,15 +94,15 @@ class Actor {
 	}
 
 	isAlive() {
-		if (this.health.physical < 0 ||
-			  this.health.mental < 0) {
+		if (this.attributes.physical.health < 0 ||
+			  this.attributes.mental.health < 0) {
 			return false;
 		};
 		return true;
 	}
 
 	loseHealth(type, loss) {
-		this.health[type] -= loss;
+		this.attributes[type].health -= loss;
 	}
 }
 

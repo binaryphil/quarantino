@@ -2,29 +2,22 @@ const Actor = require('./actors');
 
 
 class Creature extends Actor {
-	constructor(name, description,responses, 
-		          physicalHealth=100, 	physicalPower=10,
-              mentalHealth=100, mentalPower=100) {
-		super(name, description, responses,
-			    physicalHealth, physicalPower,
-			    mentalHealth, mentalPower);
+	constructor(name, description,responses, attributes) {
+		super(name, description, responses, attributes);
 		this.texts.seems = ' you see before you this creature';
-	
-		this.health.physical = physicalHealth;
-		this.power.physical = physicalPower;
 
-		this.health.mental = mentalHealth;
-		this.power.mental = mentalPower;
+		this.attributes = attributes;
 	}
 }
 
 class Cat extends Creature {
 	constructor(name, description, responses, 
-							physicalHealth=20, physicalPower=20,
-	            mentalHealth=15, mentalPower=10) {
-		super(name, description, responses,
-			    physicalHealth, physicalPower,
-			    mentalHealth, mentalPower);
+			        attributes = {'physical': {'health': 20,
+			                                   'power': 20},
+			  	                 'mental': {'health': 15,
+													          'power': 10}}) {
+		super(name, description, responses, attributes)
+
 		this.texts.seems = 'cats are well known for their ferocity';
 	}
 
@@ -36,11 +29,40 @@ class Cat extends Creature {
 		this.loseHealth('mental', protagonist.power.mental);
 
 		// Deal damage to protagonist
-		protagonist.loseHealth(this.power.physical);
-		protagonist.loseHealth(this.power.mental);
+		protagonist.loseHealth('physical', this.attributes.physical.power);
+		protagonist.loseHealth('mental', this.attributes.mental.power);
+
+		protagonist.showHealthIfAlive();
 	}
 }
 			
+class Dog extends Creature {
+	constructor(name, description, responses, 
+			        attributes = {'physical': {'health': 40,
+			                                   'power': 25},
+			  	                 'mental': {'health': 10,
+													          'power': 5}}) {
+		super(name, description, responses, attributes)
+
+		this.texts.the = '';
+		this.texts.seems = 'that you should\'nt mess with this dog.'
+	}
+
+	fought(protagonist) {
+		super.fought(protagonist);
+
+		// Take damage from protagonist 
+		this.loseHealth('physical', protagonist.power.physical);
+		this.loseHealth('mental', protagonist.power.mental);
+
+		// Deal damage to protagonist
+		protagonist.loseHealth('physical', this.attributes.physical.power);
+		protagonist.loseHealth('mental', this.attributes.mental.power);
+
+		protagonist.showHealthIfAlive();
+	}
+}
 module.exports = {
-	Cat: Cat
+	Cat: Cat,
+	Dog: Dog
 };
