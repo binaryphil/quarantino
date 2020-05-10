@@ -1,26 +1,8 @@
-const Creatures = require('./actor-refactor')
-
-const name = 'John';
-const description = 'A handosome man';
-const lookResponse = 'You see a handsome man';
-const usedResponse = 'A handsome man like him cannot be used';
-const talkResponse = 'You dont have the guts to talk to such a handsome man';
-const foughtResponse = 'Dont even think about it';
-const foughtDestroyedResponse = 'You destroyed a handsome man. Or not?';
-
-var human = new PhysicalBeing(name, description, lookResponse, usedResponse, talkResponse, foughtResponse, foughtDestroyedResponse);
-console.log(human.actCount);
-console.log(human.isAlive());
-console.log(human.looked());
-console.log(human.used());
-console.log(human.talked());
-console.log(human.fought('protagonist'));
-console.log(human.loseHealth('physical', 10))
-console.log(human.health.physical);
-
+const Creatures = require('./creature');
+const Protagonist = require('./protagonist');
 
 const gcName = "grumpy cat";
-const gcDescriprion = `a grumpy cat with a judgmental look`;
+const gcDescription = `a grumpy cat with a judgmental look`;
 let gcResponses = {'used': 'You caress the grumpy cat and your existence ' +
 													 'fills with serenity',
 	                 'looked': 'You see a grumpy cat',
@@ -32,5 +14,25 @@ let gcResponses = {'used': 'You caress the grumpy cat and your existence ' +
 	                                    'its injuries',
 }
  
+// Protagonist
+const protagonistName = "Joe";
+const protagonistPhysicalHealth = 100;
+const protagonistMentalHealth = 100;
+const protagonistPhysicalPower = 5;
+const protagonistMentalPower = 0;
 
- let grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses);
+
+const protagonist = new Protagonist(
+    protagonistName, 
+    protagonistPhysicalHealth, 
+    protagonistMentalHealth, 
+    protagonistPhysicalPower,
+    protagonistMentalPower);
+
+let grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses);
+
+grumpyCat.used(protagonist);
+grumpyCat.looked(protagonist);
+grumpyCat.talked(protagonist);
+grumpyCat.fought(protagonist)
+

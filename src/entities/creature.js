@@ -2,7 +2,7 @@ const Actor = require('./actor-refactor');
 
 
 class Creature extends Actor {
-	constructor(name, description,response, 
+	constructor(name, description,responses, 
 		          physicalHealth=100, 	physicalPower=10,
               mentalHealth=100, mentalPower=100) {
 		super(name, description, responses,
@@ -20,7 +20,7 @@ class Creature extends Actor {
 
 class Cat extends Creature {
 	constructor(name, description, responses, 
-							physicalHealth=20, physicalPower=20
+							physicalHealth=20, physicalPower=20,
 	            mentalHealth=15, mentalPower=10) {
 		super(name, description, responses,
 			    physicalHealth, physicalPower,
@@ -32,8 +32,8 @@ class Cat extends Creature {
 		super.fought(protagonist);
 
 		// Take damage from protagonist 
-		this.loseHealth(physical, protagonist.power.physical);
-		this.loseHealth(mental. protagonist.power.mental);
+		this.loseHealth('physical', protagonist.power.physical);
+		this.loseHealth('mental', protagonist.power.mental);
 
 		// Deal damage to protagonist
 		protagonist.loseHealth(this.power.physical);
@@ -42,5 +42,5 @@ class Cat extends Creature {
 }
 			
 module.exports = {
-	Cat = Cat
+	Cat: Cat
 };

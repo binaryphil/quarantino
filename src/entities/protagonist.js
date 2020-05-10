@@ -41,7 +41,7 @@ class Protagonist {
 		if (this.physicalHealth <= 0 || 
 			  this.mentalHealth <= 0) {
 				return false;
-
+		}
 		return true;
 	}
 
