@@ -28,8 +28,8 @@ class Actor {
 			                        'fought': 'You choose to fight '},
 									'closing': {'looked': '.',
 												      'talked': '.',
-												      'used': ', in some peculiar way.',
-												      'fought': 'even though it seems	'}
+												      'used': ', in some peculiar way. ',
+												      'fought': ' even though it seems'}
 								 }			 
 																
 	}
@@ -40,7 +40,7 @@ class Actor {
 		this.showIntro('looked');
 		console.log(this.responses.looked);
 
-		(this.lookCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.look > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
 	used(protagonist) {
@@ -49,7 +49,7 @@ class Actor {
 		this.showIntro('used');
 		console.log(this.responses.used);
 
-		(this.useCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.use > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
 	talked(protagonist) {
@@ -58,7 +58,7 @@ class Actor {
 		this.showIntro('talked');
 		console.log(this.responses.talked);
 
-		(this.talkCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.talk > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
 	fought(protagonist) {
@@ -67,16 +67,20 @@ class Actor {
 		this.showIntro('fought');
 		console.log(this.responses.fought);
 		
-		(this.fightCount > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.fight > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	loseHealth(type, loss) {
-		this.health[type] -= loss;
-	}
 
 	showIntro(type) {
-		let intro = this.intro.opening[type] + this.texts.the + this.name + this.texts.actionAgain1 +
-			      this.intro.closing[type]
+		let intro = this.intro.opening[type] + this.texts.the + this.name 
+			          + this.texts.actionAgain1 + this.intro.closing[type];
+
+		// if type is fight  append seems to intro and print
+		if (type == 'fought') {
+			console.log(intro + this.texts.seems);
+			return;
+		}
+
 		console.log(intro);
 	}
 
@@ -90,6 +94,17 @@ class Actor {
 		this.actionAgainText2 = " once more";
 	}
 
+	isAlive() {
+		if (this.health.physical < 0 ||
+			  this.health.mental < 0) {
+			return false;
+		};
+		return true;
+	}
+
+	loseHealth(type, loss) {
+		this.health[type] -= loss;
+	}
 }
 
 
@@ -101,6 +116,7 @@ class PhysicalBeing extends Actor {
 					  foughtResponse, foughtDestroyedResponse);
 			
 			this.texts.the = '';
+			this.texts.seems = ' he is such a handsome man.';
 	  }
 
 	  looked(physicalDmg, mentalDmg) {
@@ -125,10 +141,6 @@ class PhysicalBeing extends Actor {
 	  }
 
 	  gainPhysicalPower(gain) {
-	  }
-	  
-	  isAlive() {
-		  return ((this.physicalHealth > 0) ? true: false);
 	  }
 }
 
