@@ -2,14 +2,30 @@ const Actor = require('./actor-refactor');
 
 
 class Creature extends Actor {
-	constructor(name, description, lookedResponse, usedResponse, talkedResponse, 
-							foughtResponse, foughtDestroyedResponse, physicalHealth=100, 
-							physicalPower=10) {
-		super(name, description, lookedResponse, usedResponse, talkedResponse, 
-					foughtResponse, foughtDestroyedResponse);
-		
-		this.texts.the = 'the';
+	constructor(name, description,response, 
+		          physicalHealth=100, 	physicalPower=10,
+              mentalHealth=100, mentalPower=100) {
+		super(name, description, responses,
+			    physicalHealth, physicalPower,
+			    mentalHealth, mentalPower);
 		this.texts.seems = ' you see before you this creature';
+	
+		this.health.physical = physicalHealth;
+		this.power.physical = physicalPower;
+
+		this.health.mental = mentalHealth;
+		this.power.mental = mentalPower;
+	}
+}
+
+class Cat extends Creature {
+	constructor(name, description, responses, 
+							physicalHealth=20, physicalPower=20
+	            mentalHealth=15, mentalPower=10) {
+		super(name, description, responses,
+			    physicalHealth, physicalPower,
+			    mentalHealth, mentalPower);
+		this.texts.seems = 'cats are well known for their ferocity';
 	}
 
 	fought(protagonist) {
@@ -23,22 +39,8 @@ class Creature extends Actor {
 		protagonist.loseHealth(this.power.physical);
 		protagonist.loseHealth(this.power.mental);
 	}
-
-}
-
-class Cat extends Creature {
-	constructor(name, description, lookedResponse, usedResponse, talkedResponse, 
-							foughtResponse, foughtDestroyedResponse, physicalHealth=20, 
-							physicalPower=20, mentalHealth=15, mentalPower=10) {
-		super(name, description, lookedResponse, usedResponse, talkedResponse, 
-					foughtResponse, foughtDestroyedResponse);
-
-		this.health.physical = physicalHealth;
-		this.power.physical = physicalPower;
-
-		this.health.mental = mentalHealth;
-		this.power.mental = mentalPower;
-	}
 }
 			
-
+module.exports = {
+	Cat = Cat
+};

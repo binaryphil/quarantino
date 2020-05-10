@@ -1,15 +1,9 @@
 class Actor {
-	constructor(name, description, lookedResponse, usedResponse, 
-		          talkedResponse, foughtResponse, foughtDestroyedResponse,
-	            physicalHealth=100, mentalHealth=100, 
-	            physicaPower=20, mentalPower=20) {
+	constructor(name, description, responses,
+	            physicalHealth, mentalHealth) {
 		this.name = name;
 		this.description = description;
-		this.responses = {'looked': lookedResponse,
-						          'used': usedResponse,
-									    'talked': talkedResponse,
-				              'fought': foughtResponse,
-											'foughtDestroyed': foughtDestroyedResponse};
+		this.responses = responses;
 
 		this.actCount = {'looked': 0,
 										 'used': 0,
@@ -107,81 +101,3 @@ class Actor {
 		this.health[type] -= loss;
 	}
 }
-
-
-class PhysicalBeing extends Actor {
-    constructor(name, description, lookedResponse, usedResponse, talkedResponse, 
-				        foughtResponse, foughtDestroyedResponse, physicalHealth=100, 
-				        physicalPower=10) {
-			super(name, description, lookedResponse, usedResponse, talkedResponse, 
-					  foughtResponse, foughtDestroyedResponse);
-			
-			this.texts.the = '';
-			this.texts.seems = ' he is such a handsome man.';
-	  }
-
-	  looked(physicalDmg, mentalDmg) {
-			super.looked();
-	  }
-
-	  used() {
-		  super.used();
-	  }
-
-	  talked() {
-		  super.talked();
-	  }
-
-	  fought() {
-		  super.fought();
-	  }
-
-		
-	  losePhysicalPower(loss) {
-			this.health.physical -= loss;
-	  }
-
-	  gainPhysicalPower(gain) {
-	  }
-}
-
-// class MentalBeing extends Actor {
-// 	constructor(name, description, lookedresponse, usedresponse, talkedresponse, 
-// 				foughtresponse, foughtdestroyedresponse, mentalHealth=100, 
-// 				mentalPower=10) {
-// 		super(name, description, lookedResponse, usedResponse, talkedResponse, 
-// 			  foughtResponse, foughtDestroyerdResponse, mentalHealth, mentalPower);
-// 		this.mentalHealth = mentalHealth;
-// 		this.mentalPower = physicalPower;
-// 	}
-// 	
-// 	looked() {
-// 		super.looked();
-// 	}
-// 
-// 	used() {
-// 		super.used();
-// 	}
-// 
-// 	talked() {
-// 		super.talked();
-// 	}
-// 
-// 	fought() {
-// 		super.fought();
-// 	}
-// 
-// 	loseMentalPower(loss) {
-// 		this.mentalPower -= damage;
-// 	}
-// 
-// 	gainMentalPower(gain) {
-// 		this.mentalPower += gain;
-// 	}
-// 	
-// 	isAlive() {
-// 		return ((this.mentalHealth > 0) ? true: false);
-// 	}	
-// }
-// 
-module.exports = Actor;
