@@ -45,7 +45,7 @@ let ncResponses = {'used': 'You try to pet her despite her lousy attitude. ' +
 	                 'looked': 'You gaze at her, and she lazily looks back.',
 	                 'talked': 'You can tell that she has other, more sinister ' +
 	                           ' things in her mind.',
-	                 'fought': 'You already knew this was a bad idea, the fat cat ' +
+	                 'fought': 'You already knew this was a bad idea, the fat cati ' +
 	                           'leaps at you and shows no mercy.',
 	                 'foughtDestroyed': 'Despite her size and evil nature  ' +
 																			'you manage to subdue the foule creature. ' +
@@ -56,7 +56,7 @@ let neighboursCat = new Creatures.Cat(ncName, ncDescription, ncResponses);
 
 const creatures = [grumpyCat, neighboursCat];
 
-const day = new Day(creatures, creaturs, creatures, creatures);
-const game = new Game(day, protagonist, initialActors);
+const day = new Day(creatures, creatures, creatures, creatures);
+const game = new Game(day, protagonist, creatures);
 
-game.gameStart
+game.gameStart();

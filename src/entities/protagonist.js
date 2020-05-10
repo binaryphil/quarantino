@@ -11,18 +11,18 @@ class Protagonist {
 	}
 
 	look(actor) {
-		actor.looked(this.power);
+		actor.looked(this);
 	}
 
 	use(actor) {
-		actor.used(this.power);
+		actor.used(this);
 	}
 	talk(actor) {
-		actor.talked(this.power);
+		actor.talked(this);
 	}
 
 	fight(actor) {
-		actor.fought(this.power);
+		actor.fought(this);
 	}
 
 	fightObjectResponse(object) {

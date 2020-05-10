@@ -1,4 +1,4 @@
-const Actor = require('./actor-refactor');
+const Actor = require('./actors');
 
 
 class Creature extends Actor {
