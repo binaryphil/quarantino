@@ -1,6 +1,8 @@
 class Actor {
 	constructor(name, description, lookedResponse, usedResponse, 
-		talkedResponse, foughtResponse, foughtDestroyedResponse) {
+		          talkedResponse, foughtResponse, foughtDestroyedResponse,
+	            physicalHealth=100, mentalHealth=100, 
+	            physicaPower=20, mentalPower=20) {
 		this.name = name;
 		this.description = description;
 		this.responses = {'looked': lookedResponse,
@@ -14,8 +16,8 @@ class Actor {
 									   'talked': 0,
 					           'fought': 0};
 		
-		this.health = {'physical': 100,
-									 'mental': 100};
+		this.health = {'physical': this.physicalHealth,
+									 'mental': this.MentalHealth};
 
 		this.texts = {'the': 'the ',
 									'seems': '',
@@ -34,7 +36,7 @@ class Actor {
 																
 	}
 
-	looked(protagonist) {
+	looked(protagonistPower) {
 		this.actCount.look++;
 			
 		this.showIntro('looked');
@@ -43,7 +45,7 @@ class Actor {
 		(this.actCount.look > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	used(protagonist) {
+	used(protagonistPower) {
 		this.actCount.use++;
 
 		this.showIntro('used');
@@ -52,7 +54,7 @@ class Actor {
 		(this.actCount.use > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	talked(protagonist) {
+	talked(protagonistPower) {
 		this.actCount.talk++;
 
 		this.showIntro('talked');
@@ -61,7 +63,7 @@ class Actor {
 		(this.actCount.talk > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	fought(protagonist) {
+	fought(protagonistPower) {
 		this.actCount.fight++;
 
 		this.showIntro('fought');
@@ -182,4 +184,4 @@ class PhysicalBeing extends Actor {
 // 	}	
 // }
 // 
-module.exports = PhysicalBeing
+module.exports = Actor;

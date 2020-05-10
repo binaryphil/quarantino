@@ -43,7 +43,6 @@ class Protagonist {
 				return false;
 
 		return true;
-
 	}
 
 	isDeadText() {
