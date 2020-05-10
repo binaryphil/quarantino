@@ -70,7 +70,6 @@ class Actor {
 		(this.actCount.fight > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-
 	showIntro(type) {
 		let intro = this.intro.opening[type] + this.texts.the + this.name 
 			          + this.texts.actionAgain1 + this.intro.closing[type];
