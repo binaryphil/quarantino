@@ -4,7 +4,7 @@ class ActorGenerator{
 		this.creatures = creatures;
 		this.persons = persons;
 		// Defines how many actors are returned
-		this.how_many = 1;
+		this.how_many = 0;
 	}
 
 	newActors(){

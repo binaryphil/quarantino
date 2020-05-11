@@ -10,7 +10,7 @@ const Day = require('./assets/day');
 const protagonistName = "Joe";
 const protagonistPhysicalHealth = 100;
 const protagonistMentalHealth = 100;
-const protagonistPhysicalPower = 5;
+const protagonistPhysicalPower = 10;
 const protagonistMentalPower = 0;
 
 // Negative Object Chair
@@ -39,7 +39,7 @@ const coloredPaperFoughtDestroyedResponse = `The ${coloredPaperName} loses the b
 
 // Positive Creature Cat
 const catName = "grumpy cat";
-const catPhysicalHealth = 20;
+const catPhysicalHealth = 10;
 const catMentalHealth = 15;
 const catPhysicalPower = 20;
 const catMentalPower = 10;
