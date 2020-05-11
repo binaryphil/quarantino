@@ -11,7 +11,7 @@ class Day {
     newDay() {
         let newActors = this.actorGenerator.newActors();
         this.addNewActors(newActors);
-        this.dayCount += 1;
+        this.dayCount++;
     }
     addNewActors(newActors) {
         for (const actor of newActors) {

@@ -11,21 +11,22 @@ class Game {
 		this.gameIntroduction = "A description of the time and place. One/Two small paragraphs on the dystopic situation in order for the player enter the game's ambience." // Game Introduction
 		this.gameWonText = "Congratulations, you managed to survive through this madness!"
 		this.gameLostText = "Your body was never to be found. Your story was never to be told.\nThis world... was never ment to make any sense."
-		this.daysPerGame = 40 // The number of days per game
+		this.daysPerGame = 3 // The number of days per game
 		this.turnsPerDay = 1; // The number of turns per day
 		this.dayIndex = 0; // Δε πρέπει να μπει για να ξέρει σε ποιά μέρα είναι;
 	}
 	gameStart() {
 		console.clear();
 		this.gameIntro();
-		this.newTurn();
-		this.endTurn();
-		this.day.newDay();
+		console.log('intro end');
+		// this.newTurn();
+		// this.endTurn();
+		// this.day.newDay();
 		this.gameLoop();
 	}
 	gameLoop() {
-		console.clear();
-		console.log('Entered Loop');
+		// console.clear();
+		
 		while (true) {
 			//normal turn
 			this.newTurn();
@@ -42,9 +43,6 @@ class Game {
 			}
 			this.endTurn();
 			this.day.newDay();
-
-			// check if protagonist is dead
-			
 		}
 	}
 	gameIntro() {
@@ -76,9 +74,12 @@ class Game {
 	}
 	playerTurn() {
 		this.day.showTitle();
+		console.log(this.day.dayCount);
+		console.log(this.day.dayCount);
 		this.day.showDescription();
 		this.day.showActors();
 		let actor = this.chooseActor(); // Να έχουμε ένα είδος validation τουλάχιστον για νούμερα.
+		
 
 		console.clear();
 		this.day.showTitle();
@@ -113,7 +114,7 @@ class Game {
 		this.enterToContinue();
 	}
 	isDaysOver() {
-		(this.day.counter > this.daysPerGame) ? true: false;
+		(this.day.dayCount > this.daysPerGame) ? true: false;
 	}
 	gameWon() {
 		console.log(`${this.gameWonText}\n`);
