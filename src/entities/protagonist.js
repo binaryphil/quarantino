@@ -1,13 +1,14 @@
 class Protagonist {
 	constructor(name, physicalHealth, mentalHealth, physicalPower, mentalPower) {
 		this.name = name;
-
-		this.health = {'physical': physicalHealth,
-								 'mental': mentalHealth};
-		
-		this.power = {'physical': physicalPower,
-									'mental': mentalPower};
-		
+		this.health = {
+			physical: physicalHealth,
+			mental: mentalHealth
+		};
+		this.power = {
+			physical: physicalPower,
+			mental: mentalPower
+		};
 	}
 
 	look(actor) {
@@ -38,10 +39,10 @@ class Protagonist {
 	}
 
 	isAlive() {
-		if (this.physicalHealth <= 0 || 
-			  this.mentalHealth <= 0) {
-				return false;
+		if (this.physicalHealth <= 0 || this.mentalHealth <= 0) {
+			return false;
 		}
+
 		return true;
 	}
 

@@ -1,4 +1,3 @@
-
 const askQuestion = require('./interface');
 
 class Game {
@@ -15,6 +14,7 @@ class Game {
 		this.turnsPerDay = 1; // The number of turns per day
 		this.dayIndex = 0; // Δε πρέπει να μπει για να ξέρει σε ποιά μέρα είναι;
 	}
+
 	gameStart() {
 		console.clear();
 		this.gameIntro();
@@ -23,6 +23,7 @@ class Game {
 		this.day.newDay();
 		this.gameLoop();
 	}
+
 	gameLoop() {
 		console.clear();
 		console.log('Entered Loop');
@@ -44,18 +45,21 @@ class Game {
 			this.day.newDay();
 
 			// check if protagonist is dead
-			
+
 		}
 	}
+
 	gameIntro() {
 		console.log(`${this.title}\n`);
 		console.log(`${this.gameDescription}`);
 		this.enterToContinue();
 	}
+
 	enterToContinue() {
 		let enterText = "\nPress Enter to continue...";
 		askQuestion(enterText);
 	}
+	
 	chooseActor() {
 		let question = "\nWho do you want to interact with?\n\n";
 		let actorIndex = askQuestion(question);
@@ -63,21 +67,25 @@ class Game {
 		let actor = this.day.actors[actorIndex];
 		return actor;
 	}
+
 	chooseAction() {
 		let question = "How will you choose to act?\n\n1. Look\n2. Use\n3. Talk\n4. Fight\n\n";
 		let action = askQuestion(question);
 		return action;
 	}
+
 	newTurn() {
 		for (let i = 0; i < this.turnsPerDay; i++) {
 			console.clear();
 			this.playerTurn();
 		}
 	}
+
 	playerTurn() {
 		this.day.showTitle();
 		this.day.showDescription();
 		this.day.showActors();
+
 		let actor = this.chooseActor(); // Να έχουμε ένα είδος validation τουλάχιστον για νούμερα.
 
 		console.clear();
@@ -109,18 +117,22 @@ class Game {
 			default:
 				console.log("You picked a wrong choice, fool... How hard can it be?");
 		}
-		
+
 		this.enterToContinue();
 	}
+
 	isDaysOver() {
 		(this.day.counter > this.daysPerGame) ? true: false;
 	}
+
 	gameWon() {
 		console.log(`${this.gameWonText}\n`);
 	}
+
 	gameLost() {
 		console.log(`${this.gameLostText}\n`);
 	}
+
 	endTurn() {
 		console.clear();
 		console.log(`End of day ${this.day.dayCount}`);
@@ -132,36 +144,7 @@ class Game {
 		//	};
 		//};
 	}
-	
 
-	// newTurn() {
-	// 	let new_actors = this.actorGenerator.newActors();
-	// 	this.day.nextDay(new_actors);
-	// 	this.day.describe();
-	// }
-	// endTurn() {
-	// 	console.log(`End of day ${day.dayCount}`);
-	// 	// checks if any actor is dead, and removes them
-	// 	// for (let [index, actor] of this.day.actors.entries()) {
-	// 	//	if (actor.isDead()){
-	// 	//		this.actors.splice(index, 1);
-	// 	//	};
-	// 	//};
-	// }
-	// isPlayerDead() {
-	// 	if (this.protagonist.isDead()) {
-	// 		console.log("Game over dude!\n");
-	// 		return true;
-	// 	};
-	// 	return false;
-	// }
-	// isGameWon() {
-	// 	if (this.day.dayCount > this.daysPerGame) {
-	// 		console.log("You did it, you son of a bitch!\n");
-	// 		return true;
-	// 	}
-	// 	return false;
-	// }
 }
 
 module.exports = Game
