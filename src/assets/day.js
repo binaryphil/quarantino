@@ -23,7 +23,7 @@ class Day {
     }
     showActors() {
         this.actors.forEach(function (actor, index) {
-            console.log(`${index + 1}. ${actor.desc}`);
+            console.log(`${index + 1}. ${actor.description}`);
         });
     }
 	showDescription() {

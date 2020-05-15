@@ -1,4 +1,3 @@
-
 const askQuestion = require('./interface');
 
 class Game {
@@ -11,7 +10,7 @@ class Game {
 		this.gameIntroduction = "A description of the time and place. One/Two small paragraphs on the dystopic situation in order for the player enter the game's ambience." // Game Introduction
 		this.gameWonText = "Congratulations, you managed to survive through this madness!"
 		this.gameLostText = "Your body was never to be found. Your story was never to be told.\nThis world... was never ment to make any sense."
-		this.daysPerGame = 10 // The number of days per game
+		this.daysPerGame = 3 // The number of days per game
 		this.turnsPerDay = 1; // The number of turns per day
 		this.dayIndex = 0; // Δε πρέπει να μπει για να ξέρει σε ποιά μέρα είναι;
 	}
@@ -23,7 +22,7 @@ class Game {
 		while (true) {
 			this.newTurn();
 			// Protagonist Dies
-			if (this.protagonist.isDead()) {
+			if (!this.protagonist.isAlive()) {
 				this.gameLost();
 				return false;
 			}
@@ -72,7 +71,7 @@ class Game {
 
 		console.clear();
 		this.day.showTitle();
-		console.log(`You chose to interact with ${actor.the}${actor.name}`);
+		console.log(`You chose to interact with ${actor.texts.the}${actor.name}`);
 		let action = this.chooseAction();
 
 		switch (action) {
@@ -117,12 +116,13 @@ class Game {
 		console.log(`End of day ${this.day.dayCount}`);
 		// Remove Dead Actors
 		for (let actor of this.day.actors) {
-			if (actor.isDead()){
+			if (!actor.isAlive()) {
 				this.day.actors.splice(actor, 1);
+				console.log(this.protagonist.isAlive());
 				console.log('\nRemoved ' + actor.name);
 			};
 		};
-		this.enterToContinue();	
+		this.enterToContinue();
 	}
 }
 
