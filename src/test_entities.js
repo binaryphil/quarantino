@@ -8,7 +8,7 @@ const Creatures = require('./entities/creatures');
 const protagonistName = "Joe";
 const protagonistPhysicalHealth = 100;
 const protagonistMentalHealth = 100;
-const protagonistPhysicalPower = 5;
+const protagonistPhysicalPower = 50;
 const protagonistMentalPower = 0;
 
 
@@ -34,8 +34,18 @@ let gcResponses = {'used': 'You caress the grumpy cat and your existence ' +
 	                                    'its injuries',
 }
  
+let gcAttributes = {
+		physical: {
+			health: 20,
+			power: 25
+		},
+		mental: {
+			health: 10,
+			power: 15
+		}
+};
 
-let grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses);
+let grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses, gcAttributes);
 
 const ncName = "neighbour's cat";
 const ncDescription = `the neighbout's chubby cat who has nothing to lose`;
@@ -51,8 +61,18 @@ let ncResponses = {'used': 'You try to pet her despite her lousy attitude. ' +
 																			'you manage to subdue the foul creature. ' +
 	                                    'The vicious battle has taken its toll. '
 }
+let ncAttributes = {
+	physical: {
+		health: 20,
+		power: 25
+	},
+	mental: {
+		health: 10,
+		power: 15
+	}
+};
 
-let neighboursCat = new Creatures.Cat(ncName, ncDescription, ncResponses);
+let neighboursCat = new Creatures.Cat(ncName, ncDescription, ncResponses, ncAttributes);
 
 const fdName = "Rolf";
 const fdDescription = 'Rolf, your faithful poodle. A proud and stubborn little dog.' 
@@ -65,13 +85,9 @@ let fdResponses = {'used': 'Rolfie quietly accepts your petting, as he is ' +
 	                 'foughtDestroyed': 'The battle was short but vicious. ' +
 	                                    'Rolfie\'s sharp teeth have left their mark.' 
 };
-let fdAttributes = {'physical': {'health': 20,
-			                           'power': 25},
-			  	          'mental': {'health': 10,
-													     'power': 15}
-};
 
-let faithfulDog= new Creatures.Dog(fdName, fdDescription, fdResponses, fdAttributes);
+
+let faithfulDog= new Creatures.Dog(fdName, fdDescription, fdResponses);
 
 const creatures = [grumpyCat, neighboursCat, faithfulDog];
 

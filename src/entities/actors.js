@@ -10,14 +10,6 @@ class Actor {
 			talked: 0,
 			fought: 0
 		};
-		this.health = {
-			physical: this.physicalHealth,
-			mental: this.MentalHealth
-		};
-		this.power = {
-			physical: this.physicalPower,
-			mental: this.MentalPower
-		};
 		this.texts = {
 			the: 'the ',
 			seems: '',
@@ -103,7 +95,7 @@ class Actor {
 	}
 
 	isAlive() {
-		if (this.attributes.physical.health < 0 || this.attributes.mental.health < 0) {
+		if (this.attributes.physical.health <= 0 || this.attributes.mental.health <= 0) {
 			return false;
 		}
 		

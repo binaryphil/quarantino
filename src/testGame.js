@@ -129,6 +129,7 @@ const flatmate = new Actors.NegativeUseMentalPerson(
 const objects = [coloredPaper, chair]
 const persons = [flatmate];
 const creatures = [cat];
+
 const initialActors = [cat, flatmate, chair];
 
 /*-- Set Day Instance --*/

@@ -39,7 +39,7 @@ class Protagonist {
 	}
 
 	isAlive() {
-		if (this.physicalHealth <= 0 || this.mentalHealth <= 0) {
+		if (this.health.physical <= 0 || this.health.mental <= 0) {
 			return false;
 		}
 
@@ -55,7 +55,7 @@ class Protagonist {
 	}
 
 	showHealthIfAlive() {
-		(this.isAlive()) ? this.showHealth(): this.isDeadText();
+		(this.isAlive()) ? this.showHealth() : this.isDeadText();
 	}
 
 	showHealth() {

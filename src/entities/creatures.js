@@ -2,24 +2,17 @@ const Actor = require('./actors');
 
 
 class Creature extends Actor {
-	constructor(name, description,responses, attributes) {
+	constructor(name, description, responses, attributes) {
 		super(name, description, responses, attributes);
 		this.texts.seems = ' you see before you this creature';
-
-		this.attributes = attributes;
 	}
 }
 
 class Cat extends Creature {
-	constructor(name, description, responses, 
-			        attributes = {'physical': {'health': 20,
-			                                   'power': 20},
-			  	                 'mental': {'health': 15,
-													          'power': 10}}) {
-		super(name, description, responses, attributes)
-
-		this.texts.seems = 'cats are well known for their ferocity';
-	}
+	constructor(name, description, responses, attributes) {
+			super(name, description, responses, attributes);
+			this.texts.seems = 'cats are well known for their ferocity';
+		}
 
 	fought(protagonist) {
 		super.fought(protagonist);
