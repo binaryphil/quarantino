@@ -30,11 +30,7 @@ class Cat extends Creature {
 }
 			
 class Dog extends Creature {
-	constructor(name, description, responses, 
-			        attributes = {'physical': {'health': 40,
-			                                   'power': 25},
-			  	                 'mental': {'health': 10,
-													          'power': 5}}) {
+	constructor(name, description, responses, attributes) {
 		super(name, description, responses, attributes)
 
 		this.texts.the = '';

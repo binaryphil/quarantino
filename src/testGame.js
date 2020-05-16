@@ -133,6 +133,10 @@ const creatures = [cat];
 const initialActors = [cat, flatmate, chair];
 
 /*-- Set Day Instance --*/
+const dayDescription = [
+    'blabl',
+    'fgdfg',
+]
 // const day1 = new Day(day1Description);
 // const day2 = new Day(day2Description);
 

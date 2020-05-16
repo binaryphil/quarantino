@@ -85,13 +85,13 @@ class Actor {
 	}
 
 	resetActionAgainText() {
-		this.actionAgainText1 = "";
-		this.actionAgainText2 = "";
+		this.actionAgainText1 = '';
+		this.actionAgainText2 = '';
 	}
 
 	setActionAgainText() {
-		this.actionAgainText1 = " once again";
-		this.actionAgainText2 = " once more";
+		this.actionAgainText1 = ' once again';
+		this.actionAgainText2 = ' once more';
 	}
 
 	isAlive() {
