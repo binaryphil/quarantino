@@ -56,7 +56,6 @@ class Game {
     const upperLimit = this.day.actors.length;
     
     let actorIndex = askQuestion(question);
-
     let condition = (actorIndex >= 1) && (actorIndex <= upperLimit);
     
     while (!condition) { 
@@ -70,7 +69,16 @@ class Game {
 
 	chooseAction() {
 		const question = 'How will you choose to act?\n\n1. Look\n2. Use\n3. Talk\n4. Fight\n\n';
-		const action = askQuestion(question);
+    const validation = '\nYou have picked a wrong choice... Try again.\n\n';
+
+		let action = askQuestion(question);
+    let condition = ((action >= 1) && (action <= 4));
+    
+    while (!condition) { 
+      action = askQuestion(validation);
+      condition = ((action >= 1) && (action <= 4));
+    }
+    
 		return action;
 	}
 
