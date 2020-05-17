@@ -39,7 +39,7 @@ class Game {
 	}
 
 	gameIntro() {
-		console.clear();
+		// console.clear();
 		console.log(`${this.title}\n`);
 		console.log(`${this.gameDescription}`);
 		this.enterToContinue();
@@ -52,10 +52,20 @@ class Game {
 
 	chooseActor() {
 		const question = '\nWho do you want to interact with?\n\n';
-		let actorIndex = askQuestion(question);
-		actorIndex--;
-		const actor = this.day.actors[actorIndex];
-		return actor;
+    const validation = '\nYou have picked a wrong choice... Try again.\n\n';
+    const upperLimit = this.day.actors.length;
+    
+    let actorIndex = askQuestion(question);
+
+    let condition = (actorIndex >= 1) && (actorIndex <= upperLimit);
+    
+    while (!condition) { 
+      actorIndex = askQuestion(validation);
+      condition = ((actorIndex >= 1) && (actorIndex <= upperLimit));
+    }
+
+    actorIndex--;
+    return this.day.actors[actorIndex];
 	}
 
 	chooseAction() {
@@ -66,19 +76,19 @@ class Game {
 
 	newTurn() {
 		for (let i = 0; i < this.turnsPerDay; i++) {
-			console.clear();
+			// console.clear();
 			this.playerTurn();
 		}
 	}
 
 	playerTurn() {
-		this.day.showTitle();
+    this.day.showTitle();
 		this.day.showDescription();
 		this.day.showActors();
 
 		let actor = this.chooseActor(); // Να έχουμε ένα είδος validation τουλάχιστον για νούμερα.
 
-		console.clear();
+		// console.clear();
 		this.day.showTitle();
 		console.log(`You chose to interact with ${actor.texts.the}${actor.name}`);
 		
@@ -86,22 +96,22 @@ class Game {
 
 		switch (action) {
 			case '1':
-				console.clear();
+				// console.clear();
 				this.day.showTitle();
 				this.protagonist.look(actor);
 				break;
 			case '2':
-				console.clear();
+				// console.clear();
 				this.day.showTitle();
 				this.protagonist.use(actor);
 				break;
 			case '3':
-				console.clear();
+				// console.clear();
 				this.day.showTitle();
 				this.protagonist.talk(actor);
 				break;
 			case '4':
-				console.clear();
+				// console.clear();
 				this.day.showTitle();
 				this.protagonist.fight(actor);
 				break;
@@ -117,17 +127,17 @@ class Game {
 	}
 
 	gameWon() {
-		console.clear();
+		// console.clear();
 		console.log(`${this.gameWonText}\n`);
 	}
 
 	gameLost() {
-		console.clear();
+		// console.clear();
 		console.log(`${this.gameLostText}\n`);
 	}
 
 	endTurn() {
-		console.clear();
+		// console.clear();
 		console.log(`End of day ${this.day.dayCount}`);
 		// Remove Dead Actors
 		for (let actor of this.day.actors) {
