@@ -1,5 +1,5 @@
 class Actor {
-	constructor(name, description, responses, attributes) {
+  constructor(name, description, responses, attributes) {
 		this.name = name;
 		this.description = description;
 		this.responses = responses;
@@ -32,7 +32,7 @@ class Actor {
 		}
 	}
 
-	looked(protagonist) {
+	looked() {
 		this.actCount.look++;
 
 		this.showIntro('looked');
@@ -42,7 +42,7 @@ class Actor {
 		(this.actCount.look > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	used(protagonist) {
+	used() {
 		this.actCount.use++;
 
 		this.showIntro('used');
@@ -52,7 +52,7 @@ class Actor {
 		(this.actCount.use > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	talked(protagonist) {
+	talked() {
 		this.actCount.talk++;
 
 		this.showIntro('talked');
@@ -62,7 +62,7 @@ class Actor {
 		(this.actCount.talk > 1) ? this.setActionAgainText(): this.resetActionAgainText();
 	}
 
-	fought(protagonist) {
+	fought() {
 		this.actCount.fight++;
 
 		this.showIntro('fought');
