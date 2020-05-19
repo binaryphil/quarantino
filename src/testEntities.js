@@ -46,7 +46,7 @@ let gcAttributes = {
 };
 
 let grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses, gcAttributes);
-a 
+
 // Neighbour's Cat
 const ncName = 'neighbour\'s cat';
 const ncDescription = `the neighbout's chubby cat who has nothing to lose`;
