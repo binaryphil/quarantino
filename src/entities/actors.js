@@ -101,6 +101,7 @@ class Actor {
 		
 		return true;
 	}
+	
 	loseHealth(type, loss) {
 		this.attributes[type].health -= loss;
 	}

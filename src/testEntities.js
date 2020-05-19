@@ -34,7 +34,7 @@ let gcResponses = {
 										 'nervous breakdown and finally succumbs to ' +
 										 'its injuries',
 }
-let gcAttributes = {
+const gcAttributes = {
 		physical: {
 			health: 20,
 			power: 25
@@ -45,12 +45,12 @@ let gcAttributes = {
 		}
 };
 
-let grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses, gcAttributes);
+const grumpyCat = new Creatures.Cat(gcName, gcDescription, gcResponses, gcAttributes);
 
 // Neighbour's Cat
 const ncName = 'neighbour\'s cat';
 const ncDescription = `the neighbout's chubby cat who has nothing to lose`;
-let ncResponses = {
+const ncResponses = {
 	used: 'You try to pet her despite her lousy attitude. ' +
 				'The results are to be expected, she scratches ' +
 	      'with all her might',
@@ -63,9 +63,9 @@ let ncResponses = {
 									 'you manage to subdue the foul creature. ' +
 									 'The vicious battle has taken its toll. '
 }
-let ncAttributes = {
+const ncAttributes = {
 	physical: {
-		health: 20,
+		health: 25,
 		power: 25
 	},
 	mental: {
@@ -74,7 +74,7 @@ let ncAttributes = {
 	}
 };
 
-let neighboursCat = new Creatures.Cat(ncName, ncDescription, ncResponses, ncAttributes);
+const neighboursCat = new Creatures.Cat(ncName, ncDescription, ncResponses, ncAttributes);
 
 //Rolf
 const fdName = 'Rolf';
@@ -89,8 +89,18 @@ let fdResponses = {
 	foughtDestroyed: 'The battle was short but vicious. ' +
 	                 'Rolfie\'s sharp teeth have left their mark.'
 };
+const fdAttributes = {
+	physical: {
+		health: 20,
+		power: 25
+	},
+	mental: {
+		health: 10,
+		power: 15
+	}
+};
 
-let faithfulDog = new Creatures.Dog(fdName, fdDescription, fdResponses);
+const faithfulDog = new Creatures.Dog(fdName, fdDescription, fdResponses, fdAttributes);
 
 const creatures = [grumpyCat, neighboursCat, faithfulDog];
 
