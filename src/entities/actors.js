@@ -39,7 +39,7 @@ class Actor {
 
 		console.log(this.responses.looked);
 
-		(this.actCount.look > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.look > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
 
 	used(protagonist) {
@@ -49,7 +49,7 @@ class Actor {
 
 		console.log(this.responses.used);
 		
-		(this.actCount.use > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.use > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
 
 	talked(protagonist) {
@@ -59,7 +59,7 @@ class Actor {
 
 		console.log(this.responses.talked);
 
-		(this.actCount.talk > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		(this.actCount.talk > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
 
 	fought(protagonist) {
@@ -67,9 +67,13 @@ class Actor {
 
 		this.showIntro('fought');
 
-		console.log(this.responses.fought);
-		
-		(this.actCount.fight > 1) ? this.setActionAgainText(): this.resetActionAgainText();
+		// Take damage from protagonist 
+		this.loseHealth('physical', protagonist.power.physical);
+		this.loseHealth('mental', protagonist.power.mental);
+
+		(this.isAlive()) ? console.log(this.responses.fought): console.log(this.responses.foughtDestroyed);
+
+		(this.actCount.fight > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
 
 	showIntro(type) {

@@ -17,10 +17,6 @@ class Cat extends Creature {
 	fought(protagonist) {
 		super.fought(protagonist);
 
-		// Take damage from protagonist 
-		this.loseHealth('physical', protagonist.power.physical);
-		this.loseHealth('mental', protagonist.power.mental);
-
 		// Deal damage to protagonist
 		protagonist.loseHealth('physical', this.attributes.physical.power);
 		protagonist.loseHealth('mental', this.attributes.mental.power);
@@ -39,10 +35,6 @@ class Dog extends Creature {
 
 	fought(protagonist) {
 		super.fought(protagonist);
-
-		// Take damage from protagonist 
-		this.loseHealth('physical', protagonist.power.physical);
-		this.loseHealth('mental', protagonist.power.mental);
 
 		// Deal damage to protagonist
 		protagonist.loseHealth('physical', this.attributes.physical.power);
