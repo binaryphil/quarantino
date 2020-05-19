@@ -100,17 +100,6 @@ const fdAttributes = {
 	}
 };
 
-let fdAttributes = {
-	physical: {
-		health: 20,
-		power: 25
-	},
-	mental: {
-		health: 10,
-		power: 15
-	}
-};
-
 
 const faithfulDog = new Creatures.Dog(fdName, fdDescription, fdResponses, fdAttributes);
 
