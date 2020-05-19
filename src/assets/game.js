@@ -58,7 +58,7 @@ class Game {
     let actorIndex = askQuestion(question);
     let condition = (actorIndex >= 1) && (actorIndex <= upperLimit);
     
-    while (!condition) { 
+    while (!condition) {
       actorIndex = askQuestion(validation);
       condition = ((actorIndex >= 1) && (actorIndex <= upperLimit));
     }
