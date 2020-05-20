@@ -59,7 +59,7 @@ const ncResponses = {
 	        'things in her mind',
 	fought: 'You already knew this was a bad idea. the fat cat ' +
 	        'leaps at you and shows no mercy',
-	foughtDestroyed: 'Despite her size and evil nature  ' +
+	foughtDestroyed: 'Despite her size and evil nature ' +
 									 'you manage to subdue the foul creature. ' +
 									 'The vicious battle has taken its toll'
 }
