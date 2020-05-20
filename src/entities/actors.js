@@ -37,7 +37,7 @@ class Actor {
 
 		this.showIntro('looked');
 
-		console.log(this.responses.looked);
+		console.log(`${this.responses.looked}.`);
 
 		(this.actCount.look > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
@@ -47,7 +47,7 @@ class Actor {
 
 		this.showIntro('used');
 
-		console.log(this.responses.used);
+		console.log(`${this.responses.used}.`);
 		
 		(this.actCount.use > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
@@ -57,7 +57,7 @@ class Actor {
 
 		this.showIntro('talked');
 
-		console.log(this.responses.talked);
+		console.log(`${this.responses.talked}.`);
 
 		(this.actCount.talk > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
@@ -71,14 +71,14 @@ class Actor {
 		this.loseHealth('physical', protagonist.power.physical);
 		this.loseHealth('mental', protagonist.power.mental);
 
-		(this.isAlive()) ? console.log(this.responses.fought): console.log(this.responses.foughtDestroyed);
+		(this.isAlive()) ? console.log(`${this.responses.fought}.`) : console.log(`${this.responses.foughtDestroyed}.`);
 
 		(this.actCount.fight > 1) ? this.setActionAgainText() : this.resetActionAgainText();
 	}
 
 	showIntro(type) {
 		let intro = this.intro.opening[type] + this.texts.the + this.name + this.texts.actionAgain1 + this.intro.closing[type];
-		// if type is fight  append seems to intro and print
+		// if type is fight append seems to intro and print
 		if (type == 'fought') {
 			console.log(intro + ' ' + this.texts.seems);
 			
