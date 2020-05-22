@@ -3,7 +3,7 @@ const Protagonist = require('./entities/protagonist');
 const Game = require('./assets/game');
 const Day = require('./assets/day');
 const Creatures = require('./entities/creatures');
-
+const Environment = require('./assets/environment');
 // Protagonist
 const protagonistName = 'Joe';
 const protagonistPhysicalHealth = 100;
@@ -107,6 +107,11 @@ const creatures = [grumpyCat, neighboursCat, faithfulDog];
 
 const day = new Day(creatures, creatures, creatures, creatures);
 
-const game = new Game(day, protagonist, creatures);
+const entitiesPool = {creatures: creatures,
+                      objects: creatures,
+                      spirits: creatures};
+const environment = new Environment(entitiesPool);
+
+const game = new Game(day, protagonist, environment);
 
 game.gameStart();

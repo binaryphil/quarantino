@@ -1,10 +1,11 @@
 const askQuestion = require('./interface');
 
 class Game {
-	constructor(day, protagonist, initialActors) {
+	constructor(day, protagonist, environment) {// initialActors) {
 		this.day = day;
 		this.protagonist = protagonist;
-		this.initialActors = initialActors; // Οι initial actors δε θα έπρεπει να περνάνε στο game;
+    this.environment = environment;
+//		this.initialActors = initialActors; // Οι initial actors δε θα έπρεπει να περνάνε στο game;
 		this.title = 'Quarantino v1.0'
 		this.gameDescription = 'An in-house survival game in times of confinement.'; // Generic Description
 		this.gameIntroduction = 'A description of the time and place. One/Two small paragraphs on the dystopic situation in order for the player enter the game\'s ambience.' // Game Introduction
@@ -30,10 +31,12 @@ class Game {
 			}
 			this.endTurn();
 			// Days End
+
 			if (this.isDaysOver()) {
 				this.gameWon();
 				return false;
 			}
+
 			this.day.newDay();
 		}
 	}
@@ -53,7 +56,7 @@ class Game {
 	chooseActor() {
 		const question = '\nWho do you want to interact with?\n\n';
     const validation = '\nYou have picked a wrong choice... Try again.\n\n';
-    const upperLimit = this.day.actors.length;
+    const upperLimit = this.environment.actors.length;
     
     let actorIndex = askQuestion(question);
     let condition = (actorIndex >= 1) && (actorIndex <= upperLimit);
@@ -64,7 +67,7 @@ class Game {
     }
 
     actorIndex--;
-    return this.day.actors[actorIndex];
+    return this.environment.actors[actorIndex];
 	}
 
 	chooseAction() {
@@ -76,7 +79,7 @@ class Game {
     
     while (!condition) { 
       action = askQuestion(validation);
-      condition = ((action >= 1) && (action <= 4));
+       condition = ((action >= 1) && (action <= 4));
     }
     
 		return action;
@@ -91,10 +94,9 @@ class Game {
 
 	playerTurn() {
     this.day.showTitle();
-		this.day.showDescription();
-		this.day.showActors();
+		this.environment.showActors();
 
-		let actor = this.chooseActor(); // Να έχουμε ένα είδος validation τουλάχιστον για νούμερα.
+		let actor = this.chooseActor(); 
 
 		console.clear();
 		this.day.showTitle();
@@ -148,9 +150,9 @@ class Game {
 		console.clear();
 		console.log(`End of day ${this.day.dayCount}`);
 		// Remove Dead Actors
-		for (let actor of this.day.actors) {
+		for (let actor of this.environment.actors) {
 			if (!actor.isAlive()) {
-				this.day.actors.splice(actor, 1);
+				this.environment.actors.splice(actor, 1);
 				console.log('\nRemoved ' + actor.name);
 			};
 		};

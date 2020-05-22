@@ -4,6 +4,7 @@ class Environment {
     this.entityTypes = Object.keys(this.entitiesPool);
     this.actors = [];
     this.initialActorsLimit = 3;
+    this.cemetary = []
     this.initialise();
   }
 
@@ -17,6 +18,18 @@ class Environment {
   addNewActor() {
     let actor = this.randomActor();
     this.actors.push(actor);
+  }
+
+  removeDead() {
+    for (let actor of this.actors) {
+      if (!actor.isAlive) {
+        let index = this.actors.indexOf(actor);
+
+        dead = this.actors.splice(index, 0);
+
+        this.cemetary.push(dead);
+      }
+    }
   }
 
   randomType() {
@@ -37,14 +50,15 @@ class Environment {
     // get random index from 0 to limit-1
     return Math.round(Math.random() * (limit - 1));
   }
+
+  showActors() {
+		console.log('Inside the room you see:\n');
+
+    this.actors.forEach(function (actor, index) {
+        console.log(`${index + 1}. ${actor.description}`);
+    });
+  }
 }
 
-entitiesPool = {test1: [1, 2, 3, 4, 6],
-                test2: [12, 43, 32, 54],
-                test3: [321, 432, 543, 365]}
-
-e = new Environment(entitiesPool);
-console.log(e.entitiesPool);
-console.log(e.actors);
-    
+module.exports = Environment;
     

@@ -21,14 +21,6 @@ class Day {
     showTitle() {
         console.log(`-- Day ${this.dayCount} --\n`);
     }
-    showActors() {
-        this.actors.forEach(function (actor, index) {
-            console.log(`${index + 1}. ${actor.description}`);
-        });
-    }
-	showDescription() {
-		console.log('Inside the room you see:\n');
-	}
 }
 
 module.exports = Day;
