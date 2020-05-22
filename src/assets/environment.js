@@ -3,12 +3,20 @@ class Environment {
     this.entitiesPool = entitiesPool;
     this.entityTypes = Object.keys(this.entitiesPool);
     this.actors = [];
+    this.initialActorsLimit = 3;
+    this.initialise();
   }
 
   initialise() {
+    let limit = this.initialActorsLimit - 1;
+    for (let i=0; i<= limit; i++) {
+      this.addNewActor();
+    }
   }
 
   addNewActor() {
+    let actor = this.randomActor();
+    this.actors.push(actor);
   }
 
   randomType() {
@@ -36,10 +44,7 @@ entitiesPool = {test1: [1, 2, 3, 4, 6],
                 test3: [321, 432, 543, 365]}
 
 e = new Environment(entitiesPool);
-console.log(e.randomActor())
-console.log(e.randomActor())
-console.log(e.randomActor())
-console.log(e.randomActor())
-
+console.log(e.entitiesPool);
+console.log(e.actors);
     
     
